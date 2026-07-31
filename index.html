@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>State Notary Agent® — Verified Mobile &amp; Online Real Estate Signing Agents in Florida</title>
+<meta name="description" content="Florida's directory of verified mobile and remote online notaries and loan signing agents. Search by county, compare credentials, book directly.">
+<style>
+/* ============================================================
+   BRAND PALETTE — sampled from the State Notary Agent seal.
+   Forest green + champagne gold. Swap here to retune globally.
+   ============================================================ */
+:root{
+  --green-900:#08190F;   /* near-black green — footer, deep bg */
+  --green-800:#0C2318;   /* seal interior */
+  --green-700:#123A28;   /* nav, hero base */
+  --green-600:#1B5638;   /* primary green — buttons */
+  --green-400:#3E8A5E;   /* hover / accent */
+  --green-200:#9BBFA8;   /* muted text on dark */
+
+  --gold-600:#B08F42;    /* deep gold — text on light */
+  --gold-500:#D9B96B;    /* seal lettering gold */
+  --gold-400:#EBCE8E;    /* medallion highlight */
+  --gold-100:#F6EEDA;    /* gold wash — featured cards */
+
+  --ink:#14201A; --muted:#5E6F65; --line:#E2E6E0;
+  --bg:#F8F7F3; --card:#FFFFFF; --ok:#1B7F4D; --ok-bg:#E8F5EE;
+  --radius:12px;
+  --shadow:0 1px 2px rgba(8,25,15,.05), 0 8px 24px rgba(8,25,15,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+a{color:var(--green-600)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+
+/* ---------- nav ---------- */
+nav{background:var(--green-900);position:sticky;top:0;z-index:50;border-bottom:2px solid var(--gold-500)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo svg{width:44px;height:44px;flex:none}
+.logo .nm{font-weight:800;font-size:16px;letter-spacing:.02em;line-height:1.15;font-family:Georgia,'Times New Roman',serif}
+.logo .nm small{display:block;font-size:9.5px;font-weight:600;color:var(--gold-500);letter-spacing:.14em;
+  text-transform:uppercase;font-family:ui-sans-serif,system-ui;margin-top:2px}
+.navlinks{display:flex;gap:26px;align-items:center}
+.navlinks a{color:#C4D6C9;text-decoration:none;font-size:14.5px;font-weight:500}
+.navlinks a:hover{color:var(--gold-400)}
+.btn{display:inline-block;background:var(--green-600);color:#fff;text-decoration:none;font-weight:650;
+  padding:10px 18px;border-radius:9px;font-size:14.5px;border:none;cursor:pointer;transition:.15s;font-family:inherit}
+.btn:hover{background:var(--green-400)}
+.btn.gold{background:var(--gold-500);color:#2B2005}
+.btn.gold:hover{background:var(--gold-400)}
+.btn.grey{background:#EDEFEA;color:var(--ink)}
+@media(max-width:860px){.navlinks a:not(.btn){display:none}}
+
+/* ---------- hero ---------- */
+header.hero{background:
+   radial-gradient(ellipse at 78% 18%, rgba(217,185,107,.14), transparent 58%),
+   linear-gradient(165deg,var(--green-900),var(--green-700) 55%,#17462F);
+  color:#fff;padding:60px 0 74px;position:relative;overflow:hidden}
+header.hero::after{content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle at 1px 1px,rgba(217,185,107,.08) 1px,transparent 0);
+  background-size:24px 24px;pointer-events:none}
+.herotop{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative;z-index:2}
+@media(max-width:900px){.herotop{grid-template-columns:1fr}.heroseal{display:none}}
+.heroseal svg{width:186px;height:186px;opacity:.96;filter:drop-shadow(0 10px 30px rgba(0,0,0,.4))}
+.hero h1{font-size:clamp(29px,4.4vw,46px);line-height:1.12;margin:0 0 14px;letter-spacing:-.02em;max-width:18ch;
+  font-family:Georgia,'Times New Roman',serif;font-weight:700}
+.hero h1 em{color:var(--gold-400);font-style:normal}
+.hero p.sub{font-size:17px;color:#BCD2C3;margin:0 0 30px;max-width:56ch}
+.trust{display:flex;gap:24px;flex-wrap:wrap;margin-top:28px;font-size:13.5px;color:var(--green-200);position:relative;z-index:2}
+.trust span{display:flex;align-items:center;gap:7px}
+.trust b{color:var(--gold-400);font-weight:700}
+
+/* ---------- search ---------- */
+.searchbar{background:var(--card);border-radius:14px;box-shadow:0 14px 44px rgba(8,25,15,.3);
+  padding:14px;display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:11px;position:relative;z-index:3;
+  border-top:3px solid var(--gold-500)}
+.searchbar label{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold-600);margin:0 0 5px 3px}
+.searchbar input,.searchbar select{width:100%;padding:11px 12px;border:1.5px solid var(--line);
+  border-radius:9px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}
+.searchbar input:focus,.searchbar select:focus{outline:none;border-color:var(--green-600)}
+.searchbar .go{align-self:end}
+.searchbar .go button{width:100%;padding:12px 26px}
+@media(max-width:860px){.searchbar{grid-template-columns:1fr}}
+
+/* ---------- sections ---------- */
+section{padding:56px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+h2{font-size:27px;letter-spacing:-.02em;margin:0;font-family:Georgia,'Times New Roman',serif;font-weight:700}
+.sec-sub{color:var(--muted);font-size:15px;margin:7px 0 26px}
+#count{color:var(--muted);font-size:14px;font-weight:650}
+.rule{width:54px;height:3px;background:var(--gold-500);border-radius:2px;margin-bottom:14px}
+
+/* ---------- listing cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:13px;transition:.15s}
+.card:hover{border-color:var(--green-400);transform:translateY(-2px)}
+.card.featured{border:2px solid var(--gold-500);background:linear-gradient(180deg,var(--gold-100),#fff 36%)}
+.ribbon{display:inline-flex;align-items:center;gap:6px;background:var(--gold-500);color:#2B2005;
+  font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  padding:4px 11px;border-radius:99px;align-self:flex-start}
+.ribbon svg{width:11px;height:11px;fill:#2B2005}
+.chead{display:flex;gap:13px;align-items:flex-start}
+.avatar{width:54px;height:54px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:var(--green-700);color:var(--gold-400);font-weight:800;font-size:18px;letter-spacing:-.02em;
+  font-family:Georgia,serif;border:1.5px solid var(--gold-500)}
+.card.featured .avatar{background:var(--green-800);box-shadow:0 0 0 3px var(--gold-100)}
+.cname{font-weight:750;font-size:17.5px;line-height:1.25;margin:0;font-family:Georgia,serif}
+.cloc{font-size:13.5px;color:var(--muted);margin:3px 0 0}
+.stars{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-top:4px}
+.stars b{color:var(--ink)} .stars .s{color:var(--gold-500);letter-spacing:1px}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.badge{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:6px;background:var(--ok-bg);color:var(--ok)}
+.badge.green{background:#E7F0EA;color:var(--green-600)}
+.badge.gold{background:var(--gold-100);color:var(--gold-600)}
+.svc{font-size:13.5px;color:var(--muted);line-height:1.55}
+.svc b{color:var(--ink);font-weight:650}
+.cfoot{margin-top:auto;padding-top:13px;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.fee{font-size:12.5px;color:var(--muted)} .fee b{color:var(--ink);font-size:15px}
+.empty{grid-column:1/-1;text-align:center;padding:54px 20px;color:var(--muted);
+  border:2px dashed var(--line);border-radius:var(--radius);background:#fff}
+
+/* ---------- bands ---------- */
+.band{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:30px}
+.step .n{width:40px;height:40px;border-radius:50%;background:var(--green-700);color:var(--gold-400);
+  display:grid;place-items:center;font-weight:800;margin-bottom:13px;border:1.5px solid var(--gold-500);font-family:Georgia,serif}
+.step h3{margin:0 0 7px;font-size:17px;font-family:Georgia,serif}
+.step p{margin:0;color:var(--muted);font-size:14.5px}
+
+.split{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:center}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.tiers{display:flex;flex-direction:column;gap:11px}
+.tier{background:#fff;border:1px solid var(--line);border-radius:11px;padding:15px 17px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px}
+.tier.hi{border:2px solid var(--gold-500);background:var(--gold-100)}
+.tier h4{margin:0 0 3px;font-size:15.5px;font-family:Georgia,serif}
+.tier p{margin:0;font-size:13px;color:var(--muted);max-width:44ch}
+.tier .px{font-weight:800;font-size:19px;white-space:nowrap;font-family:Georgia,serif}
+.tier .px small{display:block;font-size:11px;color:var(--muted);font-weight:600;text-align:right;font-family:ui-sans-serif}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;background:rgba(8,25,15,.66);display:none;place-items:center;z-index:100;padding:20px}
+.modal.on{display:grid}
+.sheet{background:#fff;border-radius:15px;max-width:520px;width:100%;padding:28px;
+  box-shadow:0 24px 60px rgba(0,0,0,.4);max-height:90vh;overflow:auto;border-top:4px solid var(--gold-500)}
+.sheet h3{margin:0 0 5px;font-size:21px;font-family:Georgia,serif}
+.sheet .who{color:var(--muted);font-size:14px;margin:0 0 20px}
+.f{margin-bottom:14px}
+.f label{display:block;font-size:11.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-600);margin-bottom:5px}
+.f input,.f select,.f textarea{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;font-family:inherit}
+.f textarea{min-height:82px;resize:vertical}
+.note{background:#EFF4F0;border-left:3px solid var(--green-600);padding:11px 13px;border-radius:0 8px 8px 0;
+  font-size:13px;color:var(--green-700);margin-bottom:18px}
+.mfoot{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+
+/* ---------- footer ---------- */
+footer{background:var(--green-900);color:var(--green-200);padding:46px 0 28px;font-size:14px;
+  border-top:2px solid var(--gold-500)}
+footer .cols{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px;margin-bottom:30px}
+@media(max-width:820px){footer .cols{grid-template-columns:1fr 1fr}}
+footer h5{color:var(--gold-400);font-size:12px;text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px}
+footer a{color:var(--green-200);text-decoration:none;display:block;margin-bottom:8px}
+footer a:hover{color:var(--gold-400)}
+.legal{border-top:1px solid rgba(217,185,107,.18);padding-top:20px;font-size:12.5px;color:#7E9686;line-height:1.65}
+</style>
+</head>
+<body>
+
+<!-- ===== reusable seal ===== -->
+<svg style="display:none">
+<symbol id="seal" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B5638"/><stop offset="1" stop-color="#08190F"/>
+    </linearGradient>
+    <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0D89C"/><stop offset="1" stop-color="#C9A75C"/>
+    </linearGradient>
+    <path id="arcTop" d="M100,100 m-74,0 a74,74 0 1,1 148,0" fill="none"/>
+    <path id="arcBot" d="M100,100 m-66,0 a66,66 0 0,0 132,0" fill="none"/>
+  </defs>
+  <circle cx="100" cy="100" r="99" fill="url(#gGreen)"/>
+  <circle cx="100" cy="100" r="93" fill="none" stroke="url(#gGold)" stroke-width="1.6"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#gGold)" stroke-width="0.8" opacity=".75"/>
+  <circle cx="100" cy="100" r="57" fill="none" stroke="url(#gGold)" stroke-width="1.3"/>
+  <circle cx="100" cy="100" r="53" fill="none" stroke="url(#gGold)" stroke-width="0.7" opacity=".65"/>
+  <text font-family="Georgia,serif" font-size="17.5" font-weight="700" letter-spacing="3.4" fill="url(#gGold)">
+    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">STATE NOTARY AGENT</textPath>
+  </text>
+  <text font-family="Georgia,serif" font-size="10.2" font-weight="600" letter-spacing="2.1" fill="url(#gGold)">
+    <textPath href="#arcBot" startOffset="50%" text-anchor="middle">OFFICIAL REAL ESTATE SIGNINGS</textPath>
+  </text>
+  <circle cx="100" cy="100" r="45" fill="url(#gGold)"/>
+  <!-- notary seal press / column -->
+  <g fill="#1B5638">
+    <ellipse cx="100" cy="74" rx="3.4" ry="3.4"/>
+    <rect x="98.6" y="76" width="2.8" height="5"/>
+    <path d="M89 81h22l-2.6 5H91.6z"/>
+    <rect x="92" y="87" width="16" height="30" rx="1.4"/>
+    <rect x="94.6" y="90" width="1.5" height="24" fill="url(#gGold)" opacity=".55"/>
+    <rect x="99.3" y="90" width="1.5" height="24" fill="url(#gGold)" opacity=".55"/>
+    <rect x="104" y="90" width="1.5" height="24" fill="url(#gGold)" opacity=".55"/>
+    <path d="M86 118h28l2.5 5H83.5z"/>
+    <path d="M81 124h38v3.2H81z"/>
+  </g>
+  <!-- laurels -->
+  <g stroke="#1B5638" stroke-width="1.5" fill="none" stroke-linecap="round">
+    <path d="M78 118c-8-7-11-17-10-27"/>
+    <path d="M122 118c8-7 11-17 10-27"/>
+    <path d="M70 96c3-1 6 0 7 3M71 103c3-1 6 0 7 3M73 110c3-1 6 0 7 3"/>
+    <path d="M130 96c-3-1-6 0-7 3M129 103c-3-1-6 0-7 3M127 110c-3-1-6 0-7 3"/>
+  </g>
+</symbol>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#"><svg><use href="#seal"/></svg>
+      <span class="nm">STATE NOTARY AGENT<sup style="font-size:8px">®</sup><small>Verified Florida Signing Agents</small></span></a>
+    <div class="navlinks">
+      <a href="#find">Find a Notary</a>
+      <a href="#how">How It Works</a>
+      <a href="#join">For Notaries</a>
+      <a class="btn gold" href="#join">Get Listed</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="herotop">
+      <div>
+        <h1>Verified mobile &amp; online <em>real estate signing agents</em> across Florida.</h1>
+        <p class="sub">Every agent in this directory is commission-verified with the Florida Department of State, background-screened, and carries errors &amp; omissions coverage. Search your county and book directly.</p>
+      </div>
+      <div class="heroseal"><svg><use href="#seal"/></svg></div>
+    </div>
+
+    <div class="searchbar">
+      <div><label for="q">Notary name or keyword</label>
+        <input id="q" type="search" placeholder="e.g. loan signing, apostille, RON"></div>
+      <div><label for="county">County</label><select id="county"><option value="">All 67 counties</option></select></div>
+      <div><label for="svc">Service needed</label>
+        <select id="svc"><option value="">Any service</option>
+          <option>Loan Signing</option><option>Remote Online Notarization</option>
+          <option>Real Estate Closing</option><option>Power of Attorney</option>
+          <option>Apostille</option><option>Estate &amp; Trust Documents</option>
+          <option>General Notary Work</option></select></div>
+      <div class="go"><button class="btn" onclick="document.getElementById('find').scrollIntoView()">Search</button></div>
+    </div>
+
+    <div class="trust">
+      <span><b>✦</b> Commission verified with the FL Dept. of State</span>
+      <span><b>✦</b> Background screened annually</span>
+      <span><b>✦</b> E&amp;O insured</span>
+      <span><b>✦</b> RON commissioned under Fla. Stat. §117.225</span>
+    </div>
+  </div>
+</header>
+
+<section id="find">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="rule"></div><h2>Verified signing agents near you</h2>
+        <p class="sec-sub">Featured members appear first in their county.</p></div>
+      <div id="count"></div>
+    </div>
+    <div class="grid" id="results"></div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="rule"></div><h2>How it works</h2>
+    <p class="sec-sub">Most requests are matched with an agent the same day.</p>
+    <div class="three">
+      <div class="step"><div class="n">I</div><h3>Tell us what you need</h3><p>Pick your county and the type of document — loan signing, RON session, apostille, estate papers.</p></div>
+      <div class="step"><div class="n">II</div><h3>We match you</h3><p>Your request routes to verified agents covering that county. Featured members are contacted first and respond fastest.</p></div>
+      <div class="step"><div class="n">III</div><h3>Sign — mobile or online</h3><p>They come to you, or you complete the signing remotely by secure audio-video under Florida's RON statute.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap split">
+    <div>
+      <div class="rule"></div><h2>Are you a Florida notary?</h2>
+      <p class="sec-sub">Get listed free. We route real signing work — not just clicks.</p>
+      <p style="color:var(--muted);font-size:15px">A directory is only worth what it sends you. State Notary Agent originates its own signing volume through title companies, escrow offices, and real estate closings across Florida — then routes the overflow to verified members in that county.</p>
+      <p style="color:var(--muted);font-size:15px">Free members receive routed jobs. Featured members sit at the top of their county and get first refusal on every job we route there.</p>
+      <p style="margin-top:22px"><button class="btn gold" onclick="openJoin()">Apply to be listed</button></p>
+    </div>
+    <div class="tiers">
+      <div class="tier"><div><h4>Verified Listing</h4><p>Profile in your county, credential badges, eligibility for routed jobs.</p></div>
+        <div class="px">Free<small>after verification</small></div></div>
+      <div class="tier hi"><div><h4>Featured Agent</h4><p>Top placement in your county, first refusal on routed jobs, highlighted profile.</p></div>
+        <div class="px">$—<small>per year</small></div></div>
+      <div class="tier"><div><h4>Routed job commission</h4><p>Charged only when we send you a paid signing. No job, no fee.</p></div>
+        <div class="px">—%<small>per completed job</small></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="modal" id="modal"><div class="sheet">
+  <h3 id="mTitle">Request a notary</h3>
+  <p class="who" id="mWho"></p>
+  <div class="note" id="mNote"></div>
+  <div class="f"><label>Your name</label><input id="fName" placeholder="Full name"></div>
+  <div class="f"><label>Email</label><input id="fEmail" type="email" placeholder="you@example.com"></div>
+  <div class="f"><label>Phone</label><input id="fPhone" type="tel" placeholder="(407) 555-0123"></div>
+  <div class="f"><label>County</label><select id="fCounty"></select></div>
+  <div class="f"><label>What do you need notarized?</label>
+    <textarea id="fMsg" placeholder="e.g. Refinance package, 2 signers, Thursday evening in Lake Mary"></textarea></div>
+  <div class="mfoot"><button class="btn grey" onclick="closeModal()">Cancel</button>
+    <button class="btn" onclick="submitForm()">Send request</button></div>
+</div></div>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="logo" href="#" style="margin-bottom:14px"><svg><use href="#seal"/></svg>
+          <span class="nm">STATE NOTARY AGENT<sup style="font-size:8px">®</sup><small>Verified Florida Signing Agents</small></span></a>
+        <p style="max-width:34ch;margin:0">Florida's directory of commission-verified mobile and remote online real estate signing agents.</p>
+      </div>
+      <div><h5>Find</h5><a href="#find">Search agents</a><a href="#find">By county</a><a href="#how">How it works</a></div>
+      <div><h5>Notaries</h5><a href="#join">Get listed</a><a href="#join">Featured placement</a><a href="#join">Routed jobs</a></div>
+      <div><h5>Services</h5><a href="#find">Loan signing</a><a href="#find">Remote online notarization</a><a href="#find">Apostille</a><a href="#find">Estate documents</a></div>
+    </div>
+    <div class="legal">
+      <p><b>State Notary Agent®</b> is a directory and referral service. Listed notaries are independent contractors, not employees. State Notary Agent does not provide legal advice and does not select, prepare, or explain the legal effect of documents — Florida notaries public may not do so either.</p>
+      <p>Florida caps notarial act fees at $10 per traditional act and $25 per online act (Fla. Stat. §§117.05, 117.275). Travel, printing, and signing-agent service fees are separate and negotiated between you and the agent.</p>
+      <p style="margin-bottom:0">© 2026 State Notary Agent®. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ===== SEED DATA — replace with your database. featured:true pins to top of county. ===== */
+const NOTARIES = [
+  { name:"Matthew Mordecai", city:"Sanford", county:"Seminole", featured:true,
+    commission:"HH 407066", rating:null, reviews:0,
+    badges:["Commission Verified","RON Commissioned","E&O Insured","Licensed FL Real Estate Agent"],
+    services:["Loan Signing","Remote Online Notarization","Real Estate Closing","Power of Attorney","Estate & Trust Documents","General Notary Work"],
+    blurb:"Loan signing agent and Florida-commissioned remote online notary. Also a licensed Florida real estate agent — closing documents explained by someone who works inside the transaction daily.",
+    fee:"From $85", radius:"Seminole, Orange, Volusia, Lake" },
+];
+
+const COUNTIES=["Alachua","Baker","Bay","Bradford","Brevard","Broward","Calhoun","Charlotte","Citrus","Clay","Collier","Columbia","DeSoto","Dixie","Duval","Escambia","Flagler","Franklin","Gadsden","Gilchrist","Glades","Gulf","Hamilton","Hardee","Hendry","Hernando","Highlands","Hillsborough","Holmes","Indian River","Jackson","Jefferson","Lafayette","Lake","Lee","Leon","Levy","Liberty","Madison","Manatee","Marion","Martin","Miami-Dade","Monroe","Nassau","Okaloosa","Okeechobee","Orange","Osceola","Palm Beach","Pasco","Pinellas","Polk","Putnam","Santa Rosa","Sarasota","Seminole","St. Johns","St. Lucie","Sumter","Suwannee","Taylor","Union","Volusia","Wakulla","Walton","Washington"];
+
+const $=id=>document.getElementById(id);
+COUNTIES.forEach(c=>{$('county').insertAdjacentHTML('beforeend',`<option>${c}</option>`);
+                     $('fCounty').insertAdjacentHTML('beforeend',`<option>${c}</option>`);});
+const initials=n=>n.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+function stars(r,n){
+  if(!r) return `<div class="stars"><span style="color:var(--muted)">New listing — no reviews yet</span></div>`;
+  return `<div class="stars"><span class="s">${'★'.repeat(Math.round(r))}${'☆'.repeat(5-Math.round(r))}</span> <b>${r.toFixed(1)}</b> <span>(${n})</span></div>`;
+}
+function card(n){
+  return `<article class="card${n.featured?' featured':''}">
+  ${n.featured?`<span class="ribbon"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2Z"/></svg> Featured in ${n.county}</span>`:''}
+  <div class="chead"><div class="avatar">${initials(n.name)}</div>
+    <div><p class="cname">${n.name}</p>
+      <p class="cloc">${n.city}, FL · ${n.county} County</p>${stars(n.rating,n.reviews)}</div></div>
+  <div class="badges">${n.badges.map(b=>`<span class="badge${b.includes('Real Estate')?' gold':b.includes('RON')?' green':''}">${b}</span>`).join('')}</div>
+  <p class="svc">${n.blurb}</p>
+  <p class="svc"><b>Services:</b> ${n.services.join(' · ')}<br><b>Covers:</b> ${n.radius}</p>
+  <div class="cfoot"><span class="fee"><b>${n.fee}</b> · commission ${n.commission}</span>
+    <button class="btn" onclick="openReq('${n.name.replace(/'/g,"\\'")}','${n.county}')">Request</button></div>
+  </article>`;
+}
+function render(){
+  const q=$('q').value.trim().toLowerCase(), c=$('county').value, s=$('svc').value;
+  let list=NOTARIES.filter(n=>{
+    if(c && n.county!==c) return false;
+    if(s && !n.services.includes(s)) return false;
+    if(q && !((n.name+' '+n.city+' '+n.county+' '+n.blurb+' '+n.services.join(' ')).toLowerCase().includes(q))) return false;
+    return true;
+  });
+  list.sort((a,b)=>(b.featured?1:0)-(a.featured?1:0)||a.name.localeCompare(b.name));
+  $('count').textContent = list.length===1?'1 agent':list.length+' agents';
+  $('results').innerHTML = list.length ? list.map(card).join('')
+    : `<div class="empty"><b>No verified agents in that county yet.</b><br>
+       Send your request anyway — we route to the closest covering agent.<br>
+       <button class="btn" style="margin-top:16px" onclick="openReq('','${c||''}')">Request an agent</button></div>`;
+}
+['q','county','svc'].forEach(id=>$(id).addEventListener('input',render));
+render();
+
+let mode='request';
+function openReq(name,county){
+  mode='request';
+  $('mTitle').textContent = name?'Request '+name:'Request a signing agent';
+  $('mWho').textContent = name?'Your request goes directly to this agent.':'We\u2019ll route this to verified agents covering your county.';
+  $('mNote').textContent='Demonstration form — connect a backend or email handler before going live.';
+  if(county) $('fCounty').value=county;
+  $('modal').classList.add('on');
+}
+function openJoin(){
+  mode='join';
+  $('mTitle').textContent='Apply to be listed';
+  $('mWho').textContent='Free listing after credential verification. We verify your commission with the FL Dept. of State.';
+  $('mNote').textContent='Demonstration form — connect a backend before going live.';
+  $('modal').classList.add('on');
+}
+function closeModal(){$('modal').classList.remove('on');}
+$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+function submitForm(){
+  const n=$('fName').value.trim(), e=$('fEmail').value.trim();
+  if(!n||!e){alert('Please add your name and email.');return;}
+  console.log('SUBMIT →',{mode,name:n,email:e,phone:$('fPhone').value,county:$('fCounty').value,message:$('fMsg').value});
+  document.querySelector('.sheet').innerHTML=
+   `<h3 style="margin:0 0 8px;font-family:Georgia,serif">Thank you, ${n.split(' ')[0]}.</h3>
+    <p style="color:var(--muted)">We\u2019ve received your request. A verified agent covering ${$('fCounty').value||'your area'} will reach out shortly.</p>
+    <div class="note" style="margin-top:16px">Demo confirmation. Connect a backend to actually deliver it.</div>
+    <div class="mfoot"><button class="btn" onclick="location.reload()">Done</button></div>`;
+}
+</script>
+</body>
+</html>

@@ -3,120 +3,161 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>State Notary Agent® — Florida's Free Public Notary Directory</title>
-<meta name="description" content="Search every commissioned notary public in Florida. Free, verified against Florida Department of State records. Find a mobile notary, remote online notary, or loan signing agent in your county.">
+<title>Florida Notary Public Directory | State Notary Agent&reg;</title>
+<meta name="description" content="Public directory of commissioned notaries public in the State of Florida. Search by county, city, name, or ZIP code. Records compiled from Florida Department of State commission data.">
 <style>
 :root{
-  --green-900:#08190F; --green-800:#0C2318; --green-700:#123A28; --green-600:#1B5638;
-  --green-400:#3E8A5E; --green-200:#9BBFA8;
-  --gold-600:#B08F42; --gold-500:#D9B96B; --gold-400:#EBCE8E; --gold-100:#F6EEDA;
-  --ink:#14201A; --muted:#5E6F65; --line:#E2E6E0; --bg:#F8F7F3; --card:#FFF;
-  --ok:#1B7F4D; --ok-bg:#E8F5EE; --radius:12px;
-  --shadow:0 1px 2px rgba(8,25,15,.05),0 8px 24px rgba(8,25,15,.07);
+  --ink:#1B1B1B; --ink-2:#3D4551; --muted:#5C6670; --line:#D4D8DC; --line-2:#E8EAEC;
+  --bg:#FFFFFF; --bg-2:#F4F5F6; --bg-3:#FAFAFA;
+  --green:#14452F; --green-2:#1D5C3F; --green-3:#E7EFEA;
+  --gold:#A8842F; --gold-2:#F7F1E0;
+  --blue:#1A4480; --red:#B50909;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-a{color:var(--green-600);cursor:pointer}.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-nav{background:var(--green-900);position:sticky;top:0;z-index:50;border-bottom:2px solid var(--gold-500)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
-.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
-.logo svg{width:44px;height:44px;flex:none}
-.logo .nm{font-weight:800;font-size:15.5px;letter-spacing:.02em;line-height:1.15;font-family:Georgia,serif}
-.logo .nm small{display:block;font-size:9.5px;font-weight:600;color:var(--gold-500);letter-spacing:.13em;text-transform:uppercase;font-family:ui-sans-serif;margin-top:2px}
-.navlinks{display:flex;gap:24px;align-items:center}
-.navlinks a{color:#C4D6C9;text-decoration:none;font-size:14.5px;font-weight:500}
-.navlinks a:hover{color:var(--gold-400)}
-.btn{display:inline-block;background:var(--green-600);color:#fff;text-decoration:none;font-weight:650;padding:10px 18px;border-radius:9px;font-size:14.5px;border:none;cursor:pointer;transition:.15s;font-family:inherit}
-.btn:hover{background:var(--green-400)}
-.btn.gold{background:var(--gold-500);color:#2B2005}.btn.gold:hover{background:var(--gold-400)}
-.btn.grey{background:#EDEFEA;color:var(--ink)}
-.btn.sm{padding:7px 13px;font-size:13px}
-@media(max-width:880px){.navlinks a:not(.btn){display:none}}
-header.hero{background:radial-gradient(ellipse at 78% 18%,rgba(217,185,107,.14),transparent 58%),linear-gradient(165deg,var(--green-900),var(--green-700) 55%,#17462F);color:#fff;padding:56px 0 68px;position:relative;overflow:hidden}
-header.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(217,185,107,.08) 1px,transparent 0);background-size:24px 24px;pointer-events:none}
-.herotop{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative;z-index:2}
-@media(max-width:900px){.herotop{grid-template-columns:1fr}.heroseal{display:none}}
-.heroseal svg{width:178px;height:178px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.4))}
-.hero h1{font-size:clamp(28px,4.2vw,44px);line-height:1.12;margin:0 0 14px;letter-spacing:-.02em;max-width:19ch;font-family:Georgia,serif;font-weight:700}
-.hero h1 em{color:var(--gold-400);font-style:normal}
-.hero p.sub{font-size:17px;color:#BCD2C3;margin:0 0 28px;max-width:58ch}
-.statline{display:flex;gap:30px;flex-wrap:wrap;margin-top:26px;position:relative;z-index:2}
-.stat b{display:block;font-size:26px;color:var(--gold-400);font-family:Georgia,serif;line-height:1.1}
-.stat span{font-size:12.5px;color:var(--green-200);text-transform:uppercase;letter-spacing:.08em}
-.searchbar{background:var(--card);border-radius:14px;box-shadow:0 14px 44px rgba(8,25,15,.3);padding:14px;display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:11px;position:relative;z-index:3;border-top:3px solid var(--gold-500)}
-.searchbar label{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--gold-600);margin:0 0 5px 3px}
-.searchbar input,.searchbar select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}
-.searchbar input:focus,.searchbar select:focus{outline:none;border-color:var(--green-600)}
-.searchbar .go{align-self:end}.searchbar .go button{width:100%;padding:12px 24px}
-@media(max-width:880px){.searchbar{grid-template-columns:1fr}}
-section{padding:52px 0}
-.rule{width:54px;height:3px;background:var(--gold-500);border-radius:2px;margin-bottom:14px}
-h2{font-size:26px;letter-spacing:-.02em;margin:0;font-family:Georgia,serif;font-weight:700}
-.sec-sub{color:var(--muted);font-size:15px;margin:7px 0 24px}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
-#count{color:var(--muted);font-size:14px;font-weight:650}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;min-height:120px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:11px;transition:.15s}
-.card:hover{border-color:var(--green-400);transform:translateY(-2px)}
-.card.featured{border:2px solid var(--gold-500);background:linear-gradient(180deg,var(--gold-100),#fff 36%)}
-.ribbon{display:inline-flex;align-items:center;gap:6px;background:var(--gold-500);color:#2B2005;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:4px 10px;border-radius:99px;align-self:flex-start}
-.chead{display:flex;gap:12px;align-items:flex-start}
-.avatar{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--green-700);color:var(--gold-400);font-weight:800;font-size:16px;font-family:Georgia,serif;border:1.5px solid var(--gold-500)}
-.card.featured .avatar{background:var(--green-800);box-shadow:0 0 0 3px var(--gold-100)}
-.cname{font-weight:750;font-size:16.5px;line-height:1.25;margin:0;font-family:Georgia,serif}
-.cloc{font-size:13px;color:var(--muted);margin:3px 0 0}
-.badges{display:flex;flex-wrap:wrap;gap:5px}
-.badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--ok-bg);color:var(--ok)}
-.badge.green{background:#E7F0EA;color:var(--green-600)}
-.badge.gold{background:var(--gold-100);color:var(--gold-600)}
-.badge.grey{background:#EFF1EE;color:var(--muted)}
-.meta{font-size:12.5px;color:var(--muted);line-height:1.7}
-.meta b{color:var(--ink);font-weight:650}
-.svc{font-size:13px;color:var(--muted);line-height:1.5}
-.cfoot{margin-top:auto;padding-top:11px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.unclaimed{font-size:12px;color:var(--muted);font-style:italic}
-.pager{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:28px;flex-wrap:wrap}
-.pager button{background:#fff;border:1.5px solid var(--line);border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink)}
-.pager button:hover:not(:disabled){border-color:var(--green-600)}
-.pager button:disabled{opacity:.4;cursor:default}
-.pager .now{font-size:14px;color:var(--muted);padding:0 6px}
-.band{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.counties{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
-.cty{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 13px;cursor:pointer;font-size:14px;transition:.12s;font-family:inherit;color:var(--ink);text-align:left;width:100%}
-.cty:hover{border-color:var(--gold-500);background:var(--gold-100)}
-.cty b{font-weight:650}.cty span{color:var(--muted);font-size:12.5px;font-variant-numeric:tabular-nums}
-.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
-.step .n{width:38px;height:38px;border-radius:50%;background:var(--green-700);color:var(--gold-400);display:grid;place-items:center;font-weight:800;margin-bottom:12px;border:1.5px solid var(--gold-500);font-family:Georgia,serif}
-.step h3{margin:0 0 6px;font-size:16.5px;font-family:Georgia,serif}
-.step p{margin:0;color:var(--muted);font-size:14.5px}
-.split{display:grid;grid-template-columns:1.15fr 1fr;gap:38px;align-items:center}
-@media(max-width:900px){.split{grid-template-columns:1fr}}
-.tiers{display:flex;flex-direction:column;gap:10px}
-.tier{background:#fff;border:1px solid var(--line);border-radius:11px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.tier.hi{border:2px solid var(--gold-500);background:var(--gold-100)}
-.tier h4{margin:0 0 3px;font-size:15px;font-family:Georgia,serif}
-.tier p{margin:0;font-size:12.5px;color:var(--muted);max-width:42ch}
-.tier .px{font-weight:800;font-size:18px;white-space:nowrap;font-family:Georgia,serif}
-.tier .px small{display:block;font-size:10.5px;color:var(--muted);font-weight:600;text-align:right;font-family:ui-sans-serif}
-.modal{position:fixed;inset:0;background:rgba(8,25,15,.66);display:none;place-items:center;z-index:100;padding:20px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 "Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--blue)}a:hover{color:#162E51}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.005em;margin:0}
+
+/* ---------- utility bar ---------- */
+.util{background:var(--bg-2);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--ink-2)}
+.util .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:34px;flex-wrap:wrap}
+.util b{font-weight:700}
+.util .r{color:var(--muted)}
+
+/* ---------- masthead ---------- */
+.mast{background:var(--green);color:#fff;border-bottom:4px solid var(--gold)}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:16px;padding-bottom:16px}
+.brand{display:flex;align-items:center;gap:14px;color:#fff;text-decoration:none}
+.brand svg{width:52px;height:52px;flex:none}
+.brand .t1{font-size:19px;font-weight:700;letter-spacing:.01em;line-height:1.2}
+.brand .t2{font-size:12px;color:#C6D6CC;letter-spacing:.02em;margin-top:2px}
+.mastright{font-size:12.5px;color:#C6D6CC;text-align:right;line-height:1.5}
+.mastright b{display:block;color:#fff;font-size:15px}
+@media(max-width:760px){.mastright{display:none}}
+
+/* ---------- nav ---------- */
+.mainnav{background:var(--green-2);border-bottom:1px solid rgba(255,255,255,.12)}
+.mainnav .wrap{display:flex;gap:0;flex-wrap:wrap}
+.mainnav a{color:#DCE7E0;text-decoration:none;font-size:14px;font-weight:600;padding:11px 16px;border-bottom:3px solid transparent}
+.mainnav a:hover{background:rgba(0,0,0,.18);color:#fff}
+.mainnav a.on{border-bottom-color:var(--gold);color:#fff;background:rgba(0,0,0,.18)}
+
+/* ---------- notice ---------- */
+.notice{background:var(--gold-2);border-bottom:1px solid #E4D9BC;font-size:13px;color:#4A3C12;padding:9px 0}
+.notice b{font-weight:700}
+
+/* ---------- page head ---------- */
+.pagehead{background:var(--bg-3);border-bottom:1px solid var(--line);padding:26px 0 24px}
+.pagehead h1{font-size:27px;line-height:1.2;margin-bottom:6px}
+.pagehead p{margin:0;color:var(--ink-2);font-size:15px;max-width:80ch}
+.kpis{display:flex;gap:0;border:1px solid var(--line);background:#fff;margin-top:20px;flex-wrap:wrap}
+.kpi{padding:12px 20px;border-right:1px solid var(--line);flex:1;min-width:150px}
+.kpi:last-child{border-right:0}
+.kpi b{display:block;font-size:23px;font-family:var(--mono);font-weight:600;line-height:1.15;color:var(--green)}
+.kpi span{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* ---------- search panel ---------- */
+.panel{border:1px solid var(--line);background:#fff;margin:22px 0}
+.panel h2{font-size:14px;text-transform:uppercase;letter-spacing:.07em;padding:11px 18px;
+  background:var(--bg-2);border-bottom:1px solid var(--line);color:var(--ink-2);font-weight:700}
+.panel .body{padding:18px}
+.fields{display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:14px;align-items:end}
+@media(max-width:880px){.fields{grid-template-columns:1fr}}
+label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:5px}
+input,select{width:100%;padding:9px 11px;border:1px solid #7B8794;border-radius:0;font-size:15px;
+  font-family:inherit;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:3px solid #2491FF;outline-offset:0;border-color:#2491FF}
+.btn{display:inline-block;background:var(--green);color:#fff;border:1px solid var(--green);
+  font-weight:700;padding:9px 20px;font-size:15px;cursor:pointer;font-family:inherit;border-radius:0}
+.btn:hover{background:var(--green-2)}
+.btn.sec{background:#fff;color:var(--green);border-color:var(--green)}
+.btn.sec:hover{background:var(--green-3)}
+.btn.sm{padding:5px 11px;font-size:13px}
+
+/* ---------- results table ---------- */
+.resbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 10px}
+.resbar h2{font-size:19px}
+.resbar .n{font-size:13.5px;color:var(--muted);font-family:var(--mono)}
+.tblwrap{border:1px solid var(--line);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead th{background:var(--green);color:#fff;text-align:left;padding:9px 12px;font-size:11.5px;
+  text-transform:uppercase;letter-spacing:.06em;font-weight:700;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)}
+thead th:last-child{border-right:0}
+tbody td{padding:10px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+tbody tr:nth-child(even){background:var(--bg-3)}
+tbody tr:hover{background:var(--green-3)}
+tbody tr.feat{background:var(--gold-2);border-left:4px solid var(--gold)}
+tbody tr.feat:hover{background:#F2E9CF}
+.nm{font-weight:700;color:var(--ink)}
+.sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+.mono{font-family:var(--mono);font-size:13px;white-space:nowrap}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 6px;border:1px solid;
+  text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;margin:1px 3px 1px 0}
+.tag.claim{color:var(--green);border-color:var(--green);background:var(--green-3)}
+.tag.rec{color:var(--muted);border-color:var(--line);background:var(--bg-2)}
+.tag.feat{color:#6B5314;border-color:var(--gold);background:#F3E7C6}
+.tag.ron{color:var(--blue);border-color:var(--blue);background:#EAF1FB}
+.empty{padding:44px 20px;text-align:center;color:var(--muted)}
+.pager{display:flex;gap:10px;align-items:center;justify-content:center;margin:20px 0 0;flex-wrap:wrap}
+.pager button{background:#fff;border:1px solid #7B8794;padding:7px 15px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink);border-radius:0}
+.pager button:hover:not(:disabled){background:var(--bg-2)}
+.pager button:disabled{opacity:.38;cursor:default}
+.pager .now{font-size:13.5px;color:var(--muted);font-family:var(--mono)}
+
+/* ---------- county index ---------- */
+.cidx{columns:4;column-gap:26px;font-size:14px}
+@media(max-width:1000px){.cidx{columns:3}}
+@media(max-width:700px){.cidx{columns:2}}
+.cidx button{display:flex;justify-content:space-between;gap:10px;width:100%;background:none;border:0;
+  border-bottom:1px solid var(--line-2);padding:6px 2px;font:inherit;cursor:pointer;color:var(--blue);text-align:left;
+  break-inside:avoid}
+.cidx button:hover{background:var(--green-3);color:var(--green)}
+.cidx button span{color:var(--muted);font-family:var(--mono);font-size:12.5px}
+
+/* ---------- content sections ---------- */
+section{padding:34px 0}
+.band{background:var(--bg-3);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+h2.sec{font-size:21px;margin-bottom:5px}
+.lede{color:var(--ink-2);font-size:15px;margin:0 0 20px;max-width:82ch}
+.cols3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:26px}
+.cols3 h3{font-size:15.5px;margin-bottom:5px;padding-bottom:5px;border-bottom:2px solid var(--gold)}
+.cols3 p{margin:0;font-size:14px;color:var(--ink-2)}
+.deflist{border:1px solid var(--line)}
+.deflist .row{display:flex;justify-content:space-between;gap:18px;padding:13px 16px;border-bottom:1px solid var(--line-2)}
+.deflist .row:last-child{border-bottom:0}
+.deflist .row.hl{background:var(--gold-2)}
+.deflist h4{font-size:14.5px;margin-bottom:2px}
+.deflist p{margin:0;font-size:13px;color:var(--muted);max-width:52ch}
+.deflist .v{font-family:var(--mono);font-weight:600;white-space:nowrap;font-size:15px}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;background:rgba(27,27,27,.6);display:none;place-items:center;z-index:100;padding:20px}
 .modal.on{display:grid}
-.sheet{background:#fff;border-radius:15px;max-width:520px;width:100%;padding:26px;box-shadow:0 24px 60px rgba(0,0,0,.4);max-height:90vh;overflow:auto;border-top:4px solid var(--gold-500)}
-.sheet h3{margin:0 0 5px;font-size:20px;font-family:Georgia,serif}
-.sheet .who{color:var(--muted);font-size:14px;margin:0 0 18px}
-.f{margin-bottom:13px}
-.f label{display:block;font-size:11.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-600);margin-bottom:5px}
-.f input,.f select,.f textarea{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;font-family:inherit}
-.f textarea{min-height:76px;resize:vertical}
-.note{background:#EFF4F0;border-left:3px solid var(--green-600);padding:11px 13px;border-radius:0 8px 8px 0;font-size:13px;color:var(--green-700);margin-bottom:16px}
-.mfoot{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
-footer{background:var(--green-900);color:var(--green-200);padding:44px 0 26px;font-size:14px;border-top:2px solid var(--gold-500)}
-footer .cols{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:30px;margin-bottom:28px}
+.sheet{background:#fff;max-width:540px;width:100%;max-height:90vh;overflow:auto;border-top:5px solid var(--green)}
+.sheet .hd{background:var(--bg-2);border-bottom:1px solid var(--line);padding:14px 20px}
+.sheet .hd h3{font-size:17px}.sheet .hd p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+.sheet .bd{padding:20px}
+.f{margin-bottom:14px}
+.callout{border-left:4px solid var(--blue);background:#EAF1FB;padding:10px 13px;font-size:13px;color:#162E51;margin-bottom:16px}
+.mfoot{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;background:var(--bg-2);border-top:1px solid var(--line)}
+
+/* ---------- footer ---------- */
+footer{background:var(--green);color:#C6D6CC;padding:34px 0 22px;font-size:13.5px;border-top:4px solid var(--gold)}
+footer .cols{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:28px;margin-bottom:26px}
 @media(max-width:820px){footer .cols{grid-template-columns:1fr 1fr}}
-footer h5{color:var(--gold-400);font-size:12px;text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px}
-footer a{color:var(--green-200);text-decoration:none;display:block;margin-bottom:8px}
-footer a:hover{color:var(--gold-400)}
-.legal{border-top:1px solid rgba(217,185,107,.18);padding-top:18px;font-size:12.5px;color:#7E9686;line-height:1.65}
-.skel{background:linear-gradient(90deg,#EEF0EC,#F7F8F6,#EEF0EC);background-size:200% 100%;animation:sh 1.1s infinite;border-radius:var(--radius);height:186px}
+footer h5{color:#fff;font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:10px;
+  padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.2)}
+footer a{color:#C6D6CC;text-decoration:none;display:block;margin-bottom:7px;cursor:pointer}
+footer a:hover{color:#fff;text-decoration:underline}
+.legal{border-top:1px solid rgba(255,255,255,.18);padding-top:18px;font-size:12px;color:#9FB6A8;line-height:1.6}
+.legal p{margin:0 0 9px}
+.legal b{color:#DDE8E0}
+.skelrow td{height:44px}
+.sk{display:block;height:12px;background:linear-gradient(90deg,#EDEFF0,#F8F9FA,#EDEFF0);background-size:200% 100%;animation:sh 1.1s infinite}
 @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
 </style>
 </head>
@@ -124,228 +165,257 @@ footer a:hover{color:var(--gold-400)}
 
 <svg style="display:none"><symbol id="seal" viewBox="0 0 200 200">
   <defs>
-    <linearGradient id="gG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B5638"/><stop offset="1" stop-color="#08190F"/></linearGradient>
-    <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0D89C"/><stop offset="1" stop-color="#C9A75C"/></linearGradient>
     <path id="aT" d="M100,100 m-74,0 a74,74 0 1,1 148,0" fill="none"/>
     <path id="aB" d="M100,100 m-66,0 a66,66 0 0,0 132,0" fill="none"/>
   </defs>
-  <circle cx="100" cy="100" r="99" fill="url(#gG)"/>
-  <circle cx="100" cy="100" r="93" fill="none" stroke="url(#gA)" stroke-width="1.6"/>
-  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#gA)" stroke-width=".8" opacity=".75"/>
-  <circle cx="100" cy="100" r="57" fill="none" stroke="url(#gA)" stroke-width="1.3"/>
-  <circle cx="100" cy="100" r="53" fill="none" stroke="url(#gA)" stroke-width=".7" opacity=".65"/>
-  <text font-family="Georgia,serif" font-size="17.5" font-weight="700" letter-spacing="3.4" fill="url(#gA)"><textPath href="#aT" startOffset="50%" text-anchor="middle">STATE NOTARY AGENT</textPath></text>
-  <text font-family="Georgia,serif" font-size="9.4" font-weight="600" letter-spacing="1.9" fill="url(#gA)"><textPath href="#aB" startOffset="50%" text-anchor="middle">FLORIDA PUBLIC NOTARY DIRECTORY</textPath></text>
-  <circle cx="100" cy="100" r="45" fill="url(#gA)"/>
-  <g fill="#1B5638">
+  <circle cx="100" cy="100" r="99" fill="#14452F"/>
+  <circle cx="100" cy="100" r="93" fill="none" stroke="#C9A75C" stroke-width="1.8"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#C9A75C" stroke-width=".9" opacity=".7"/>
+  <circle cx="100" cy="100" r="57" fill="none" stroke="#C9A75C" stroke-width="1.4"/>
+  
+  <text font-family="Georgia,serif" font-size="17" font-weight="700" letter-spacing="3.3" fill="#DFC98A"><textPath href="#aT" startOffset="50%" text-anchor="middle">STATE NOTARY AGENT</textPath></text>
+  <text font-family="Georgia,serif" font-size="9.2" font-weight="600" letter-spacing="1.8" fill="#DFC98A"><textPath href="#aB" startOffset="50%" text-anchor="middle">FLORIDA PUBLIC NOTARY DIRECTORY</textPath></text>
+  <circle cx="100" cy="100" r="45" fill="#DFC98A"/>
+  <g fill="#14452F">
     <ellipse cx="100" cy="74" rx="3.4" ry="3.4"/><rect x="98.6" y="76" width="2.8" height="5"/>
-    <path d="M89 81h22l-2.6 5H91.6z"/><rect x="92" y="87" width="16" height="30" rx="1.4"/>
-    <rect x="94.6" y="90" width="1.5" height="24" fill="url(#gA)" opacity=".55"/>
-    <rect x="99.3" y="90" width="1.5" height="24" fill="url(#gA)" opacity=".55"/>
-    <rect x="104" y="90" width="1.5" height="24" fill="url(#gA)" opacity=".55"/>
+    <path d="M89 81h22l-2.6 5H91.6z"/><rect x="92" y="87" width="16" height="30" rx="1.2"/>
     <path d="M86 118h28l2.5 5H83.5z"/><path d="M81 124h38v3.2H81z"/>
   </g>
-  <g stroke="#1B5638" stroke-width="1.5" fill="none" stroke-linecap="round">
+  <g stroke="#14452F" stroke-width="1.5" fill="none" stroke-linecap="round">
     <path d="M78 118c-8-7-11-17-10-27"/><path d="M122 118c8-7 11-17 10-27"/>
     <path d="M70 96c3-1 6 0 7 3M71 103c3-1 6 0 7 3M73 110c3-1 6 0 7 3"/>
     <path d="M130 96c-3-1-6 0-7 3M129 103c-3-1-6 0-7 3M127 110c-3-1-6 0-7 3"/>
   </g>
 </symbol></svg>
 
-<nav><div class="wrap">
-  <a class="logo" href="/"><svg><use href="#seal"/></svg>
-    <span class="nm">STATE NOTARY AGENT<sup style="font-size:8px">&reg;</sup><small>Florida Public Notary Directory</small></span></a>
-  <div class="navlinks">
-    <a href="#find">Find a Notary</a><a href="#counties">Browse Counties</a>
-    <a href="#how">How It Works</a><a href="#claim">For Notaries</a>
-    <a class="btn gold" onclick="openClaim()">Claim Your Listing</a>
-  </div>
-</div></nav>
+<div class="util"><div class="wrap">
+  <div><b>State Notary Agent&reg;</b> &middot; Florida Notary Public Directory</div>
+  <div class="r">Records last updated <span id="gen">&mdash;</span> &middot; Source: Florida Department of State</div>
+</div></div>
 
-<header class="hero"><div class="wrap">
-  <div class="herotop">
-    <div>
-      <h1>Florida's free public directory of <em>every commissioned notary</em>.</h1>
-      <p class="sub">Mobile notaries, remote online notaries, loan signing agents, and everyday general notary work &mdash; searchable by county, city, or name. Built from Florida Department of State commission records.</p>
-    </div>
-    <div class="heroseal"><svg><use href="#seal"/></svg></div>
-  </div>
-
-  <div class="searchbar">
-    <div><label for="q">Name, city, or ZIP</label><input id="q" type="search" placeholder="e.g. Rodriguez, Orlando, 32773"></div>
-    <div><label for="county">County</label><select id="county"><option value="">All counties</option></select></div>
-    <div><label for="service">Service</label><select id="service"><option value="">Any service</option>
-      <option>General Notary Work</option><option>Mobile Notary</option>
-      <option>Remote Online Notarization</option><option>Loan Signing</option>
-      <option>Real Estate Closing</option><option>Power of Attorney</option>
-      <option>Estate &amp; Trust Documents</option></select></div>
-    <div class="go"><button class="btn" onclick="go(1)">Search</button></div>
-  </div>
-
-  <div class="statline">
-    <div class="stat"><b id="sTotal">&mdash;</b><span>Notaries listed</span></div>
-    <div class="stat"><b id="sCounties">&mdash;</b><span>Counties covered</span></div>
-    <div class="stat"><b>Free</b><span>Always, for the public</span></div>
-    <div class="stat"><b>FL DOS</b><span>Commission-verified</span></div>
-  </div>
+<header class="mast"><div class="wrap">
+  <a class="brand" href="/"><svg><use href="#seal"/></svg>
+    <span><span class="t1">Florida Notary Public Directory</span>
+    <span class="t2">Search commissioned notaries by county, city, name, or commission number</span></span></a>
+  <div class="mastright"><b id="mTotal">&mdash;</b>commissions on file<br><span id="mCounties">&mdash;</span> counties</div>
 </div></header>
 
-<section id="find"><div class="wrap">
-  <div class="sec-head">
-    <div><div class="rule"></div><h2>Search results</h2>
-      <p class="sec-sub">Claimed and featured listings appear first. Everything else comes straight from the state record.</p></div>
-    <div id="count"></div>
+<nav class="mainnav"><div class="wrap">
+  <a href="#search" class="on">Search Directory</a>
+  <a href="#counties">County Index</a>
+  <a href="#about">About the Records</a>
+  <a href="#notaries">For Notaries</a>
+  <a onclick="openClaim()">Claim a Listing</a>
+</div></nav>
+
+<div class="notice"><div class="wrap">
+  <b>Notice:</b> State Notary Agent&reg; is a privately operated directory. It is <b>not a government agency</b> and is not affiliated with, endorsed by, or acting on behalf of the State of Florida or the Florida Department of State. Official commission records are maintained by the
+  <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">Florida Department of State</a>.
+</div></div>
+
+<div class="pagehead"><div class="wrap">
+  <h1>Search commissioned notaries public in Florida</h1>
+  <p>This directory lists active notary commissions compiled from the Florida Department of State's published Notaries Public journals. Each record shows the commission series and number and its expiration date so it can be independently verified with the state.</p>
+  <div class="kpis">
+    <div class="kpi"><b id="kTotal">&mdash;</b><span>Commissions on file</span></div>
+    <div class="kpi"><b id="kCounties">&mdash;</b><span>Counties represented</span></div>
+    <div class="kpi"><b id="kClaimed">&mdash;</b><span>Claimed listings</span></div>
+    <div class="kpi"><b>No fee</b><span>Public access</span></div>
   </div>
-  <div class="grid" id="results"></div>
+</div></div>
+
+<div class="wrap" id="search">
+  <div class="panel">
+    <h2>Search criteria</h2>
+    <div class="body"><div class="fields">
+      <div><label for="q">Name, city, ZIP, or commission number</label>
+        <input id="q" type="search" placeholder="e.g. Rodriguez / Orlando / 32773 / HH 407066"></div>
+      <div><label for="county">County</label><select id="county"><option value="">All counties</option></select></div>
+      <div><label for="service">Service offered</label><select id="service"><option value="">Any service</option>
+        <option>General Notary Work</option><option>Mobile Notary</option>
+        <option>Remote Online Notarization</option><option>Loan Signing</option>
+        <option>Real Estate Closing</option><option>Power of Attorney</option>
+        <option>Estate &amp; Trust Documents</option></select></div>
+      <div style="display:flex;gap:8px"><button class="btn" onclick="go(1)">Search</button>
+        <button class="btn sec" onclick="reset()">Reset</button></div>
+    </div>
+    <p style="margin:14px 0 0;font-size:12.5px;color:var(--muted)">Service filtering applies only to claimed listings, since the state record does not include services offered.</p>
+    </div>
+  </div>
+
+  <div class="resbar"><h2>Search results</h2><div class="n" id="count"></div></div>
+  <div class="tblwrap">
+    <table>
+      <thead><tr>
+        <th style="width:26%">Notary</th><th style="width:17%">Location</th>
+        <th style="width:15%">Commission</th><th style="width:11%">Expires</th>
+        <th style="width:11%">Bond agency</th><th style="width:20%">Status / Services</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
   <div class="pager" id="pager"></div>
-</div></section>
+</div>
 
 <section class="band" id="counties"><div class="wrap">
-  <div class="rule"></div><h2>Browse by county</h2>
-  <p class="sec-sub">Every Florida county we currently have commissioned notaries on file for.</p>
-  <div class="counties" id="countyGrid"></div>
+  <h2 class="sec">County index</h2>
+  <p class="lede">Select a county to filter the directory. Counts reflect active commissions currently on file.</p>
+  <div class="cidx" id="cidx"></div>
 </div></section>
 
-<section id="how"><div class="wrap">
-  <div class="rule"></div><h2>How it works</h2>
-  <p class="sec-sub">Free for the public. Always.</p>
-  <div class="three">
-    <div class="step"><div class="n">I</div><h3>Search</h3><p>Find notaries by county, city, ZIP, or name. Every listing shows the commission number and expiration date so you can verify it independently with the state.</p></div>
-    <div class="step"><div class="n">II</div><h3>Contact</h3><p>Claimed listings show services, coverage area, and a direct request button. Unclaimed ones are verification records &mdash; useful for confirming a commission is real and current.</p></div>
-    <div class="step"><div class="n">III</div><h3>Get signed</h3><p>Mobile notaries travel to you. Remote online notaries can complete the notarization by secure audio-video under Florida's RON statute.</p></div>
+<section id="about"><div class="wrap">
+  <h2 class="sec">About these records</h2>
+  <p class="lede">What this directory publishes, what it deliberately withholds, and how to verify a commission independently.</p>
+  <div class="cols3">
+    <div><h3>Source of record</h3><p>Compiled from the Florida Department of State's published Notaries Public daily journals &mdash; a free public record released by the state in machine-readable form. Records are refreshed on an ongoing basis.</p></div>
+    <div><h3>Information withheld</h3><p>We publish name, commission series and number, issue and expiration date, bonding agency, city, county, and ZIP. We do <b>not</b> publish street addresses, telephone numbers, or dates of birth, and we exclude records carrying an address restriction under Fla. Stat. &sect;119.071(4)(d).</p></div>
+    <div><h3>Independent verification</h3><p>A listing here is a convenience, not an official certification. Verify any commission directly through the Florida Department of State notary search before relying on it for a transaction.</p></div>
+    <div><h3>Statutory fee limits</h3><p>Florida caps notarial act fees at <b>$10 per traditional act</b> and <b>$25 per online act</b> (Fla. Stat. &sect;&sect;117.05, 117.275). Travel, printing, and signing-agent service fees are separate and negotiated directly with the notary.</p></div>
+    <div><h3>Corrections and removal</h3><p>Any notary may claim, correct, or request removal of a listing at no cost. Removal here does not affect the underlying state record, which remains public.</p></div>
+    <div><h3>No legal advice</h3><p>This directory does not provide legal advice, and neither may a Florida notary public. A notary may not select documents, explain their legal effect, or advise on how to complete them.</p></div>
   </div>
 </div></section>
 
-<section class="band" id="claim"><div class="wrap split">
-  <div>
-    <div class="rule"></div><h2>Are you a Florida notary?</h2>
-    <p class="sec-sub">Your commission is already public record. Claim your listing free.</p>
-    <p style="color:var(--muted);font-size:15px">Claiming is free and always will be. It lets you add the services you offer, your coverage area, contact preferences, and credentials like E&amp;O coverage, RON commissioning, and background screening &mdash; so people searching can actually reach you instead of just verifying you exist.</p>
-    <p style="color:var(--muted);font-size:15px">We also route signing work we originate through title companies and closing firms to notaries in that county. Claimed listings are eligible; featured members get first refusal.</p>
-    <p style="margin-top:20px"><button class="btn gold" onclick="openClaim()">Claim your listing &mdash; free</button>
-      <button class="btn grey" style="margin-left:8px" onclick="openRemove()">Request removal</button></p>
+<section class="band" id="notaries"><div class="wrap">
+  <h2 class="sec">For Florida notaries</h2>
+  <p class="lede">Your commission is already a public record. Claiming your listing is free and lets the public reach you rather than merely verify you exist.</p>
+  <div class="deflist">
+    <div class="row"><div><h4>Public record listing</h4><p>Name, commission, expiration, city and county. Published automatically from state records.</p></div><div class="v">Automatic</div></div>
+    <div class="row"><div><h4>Claimed listing</h4><p>Add services offered, counties covered, contact method, and credentials such as E&amp;O coverage, RON commissioning, and background screening. Eligible to receive routed work.</p></div><div class="v">No charge</div></div>
+    <div class="row hl"><div><h4>Featured listing</h4><p>Priority placement within your county and first refusal on signing work routed to that county.</p></div><div class="v">$&mdash; / yr</div></div>
+    <div class="row"><div><h4>Removal request</h4><p>Delisting from this directory at any time, at no cost, for any reason.</p></div><div class="v">No charge</div></div>
   </div>
-  <div class="tiers">
-    <div class="tier"><div><h4>Public record listing</h4><p>Name, commission, expiration, city. Already live &mdash; this is public record.</p></div><div class="px">&mdash;<small>automatic</small></div></div>
-    <div class="tier"><div><h4>Claimed listing</h4><p>Add services, coverage area, contact button, credential badges. Eligible for routed jobs.</p></div><div class="px">Free<small>forever</small></div></div>
-    <div class="tier hi"><div><h4>Featured agent</h4><p>Top of your county, first refusal on routed jobs, highlighted profile.</p></div><div class="px">$&mdash;<small>per year</small></div></div>
-  </div>
+  <p style="margin-top:18px">
+    <button class="btn" onclick="openClaim()">Claim your listing</button>
+    <button class="btn sec" style="margin-left:8px" onclick="openRemove()">Request removal</button></p>
 </div></section>
 
 <div class="modal" id="modal"><div class="sheet">
-  <h3 id="mTitle"></h3><p class="who" id="mWho"></p><div class="note" id="mNote"></div>
-  <div class="f"><label>Your name</label><input id="fName" placeholder="Full name"></div>
-  <div class="f"><label>Email</label><input id="fEmail" type="email" placeholder="you@example.com"></div>
-  <div class="f"><label>Phone</label><input id="fPhone" type="tel" placeholder="(407) 555-0123"></div>
-  <div class="f" id="fCommWrap"><label>Notary commission number</label><input id="fComm" placeholder="e.g. HH 407066"></div>
-  <div class="f"><label id="lMsg">Message</label><textarea id="fMsg"></textarea></div>
-  <div class="mfoot"><button class="btn grey" onclick="closeModal()">Cancel</button>
+  <div class="hd"><h3 id="xTitle"></h3><p id="xWho"></p></div>
+  <div class="bd">
+    <div class="callout" id="xNote"></div>
+    <div class="f"><label>Full name</label><input id="fName" placeholder="First and last name"></div>
+    <div class="f"><label>Email address</label><input id="fEmail" type="email" placeholder="you@example.com"></div>
+    <div class="f"><label>Telephone</label><input id="fPhone" type="tel" placeholder="(407) 555-0123"></div>
+    <div class="f" id="fCommWrap"><label>Commission number</label><input id="fComm" placeholder="e.g. HH 407066"></div>
+    <div class="f"><label id="lMsg">Details</label><input id="fMsg" placeholder=""></div>
+  </div>
+  <div class="mfoot"><button class="btn sec" onclick="closeModal()">Cancel</button>
     <button class="btn" onclick="submitForm()">Submit</button></div>
 </div></div>
 
 <footer><div class="wrap">
   <div class="cols">
     <div>
-      <a class="logo" href="/" style="margin-bottom:14px"><svg><use href="#seal"/></svg>
-        <span class="nm">STATE NOTARY AGENT<sup style="font-size:8px">&reg;</sup><small>Florida Public Notary Directory</small></span></a>
-      <p style="max-width:36ch;margin:0">Florida's free, searchable directory of commissioned notaries public &mdash; built from official state records.</p>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+        <svg style="width:46px;height:46px;flex:none"><use href="#seal"/></svg>
+        <div><div style="color:#fff;font-weight:700;font-size:15px">State Notary Agent&reg;</div>
+        <div style="font-size:12px;color:#9FB6A8">Florida Public Notary Directory</div></div>
+      </div>
+      <p style="margin:0;max-width:38ch">A free public directory of commissioned notaries public in the State of Florida.</p>
     </div>
-    <div><h5>Find</h5><a href="#find">Search notaries</a><a href="#counties">Browse by county</a><a href="#how">How it works</a></div>
-    <div><h5>Notaries</h5><a onclick="openClaim()">Claim your listing</a><a href="#claim">Featured placement</a><a onclick="openRemove()">Request removal</a></div>
-    <div><h5>Services</h5><a href="#find">General notary work</a><a href="#find">Mobile notary</a><a href="#find">Remote online notarization</a><a href="#find">Loan signing</a></div>
+    <div><h5>Directory</h5><a href="#search">Search records</a><a href="#counties">County index</a><a href="#about">About the records</a></div>
+    <div><h5>Notaries</h5><a onclick="openClaim()">Claim a listing</a><a href="#notaries">Featured placement</a><a onclick="openRemove()">Request removal</a></div>
+    <div><h5>Official resources</h5>
+      <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">FL DOS notary search</a>
+      <a href="https://dos.fl.gov/sunbiz/other-services/notaries/" target="_blank" rel="noopener">FL DOS notary information</a>
+      <a href="https://www.flsenate.gov/Laws/Statutes/2025/Chapter117/All" target="_blank" rel="noopener">Fla. Stat. Chapter 117</a></div>
   </div>
   <div class="legal">
-    <p><b>Where this data comes from.</b> Listings are built from the Florida Department of State's published Notaries Public daily journals, a free public record. We deliberately publish only name, notary ID, commission series and number, issue and expiration date, bonding agency, city, county, and ZIP. <b>We do not publish street addresses, telephone numbers, or dates of birth</b>, and we exclude any record flagged with an address restriction under Fla. Stat. &sect;119.071(4)(d). Any notary may claim, correct, or request removal of their listing at any time.</p>
-    <p><b>State Notary Agent&reg;</b> is a directory and referral service. Listed notaries are independent contractors, not employees, and a listing is not an endorsement. Always verify a commission directly with the Florida Department of State before relying on it. We do not provide legal advice &mdash; and Florida notaries public may not either.</p>
-    <p>Florida caps notarial act fees at $10 per traditional act and $25 per online act (Fla. Stat. &sect;&sect;117.05, 117.275). Travel, printing, and signing-agent service fees are separate and negotiated directly with the notary.</p>
-    <p style="margin-bottom:0">&copy; 2026 State Notary Agent&reg;. Data last refreshed <span id="gen">&mdash;</span>.</p>
+    <p><b>Not a government website.</b> State Notary Agent&reg; is a privately operated commercial directory and referral service. It is not a government agency and is not affiliated with, endorsed by, or acting on behalf of the State of Florida, the Florida Department of State, or any other public body. Official notary commission records are maintained solely by the Florida Department of State.</p>
+    <p><b>Source and privacy.</b> Listings are derived from the Florida Department of State's published Notaries Public journals, a public record. We publish only name, notary identification number, commission series and number, issue and expiration date, bonding agency, city, county, and ZIP code. We do not publish street addresses, telephone numbers, or dates of birth, and we exclude records flagged with an address restriction under Fla. Stat. &sect;119.071(4)(d).</p>
+    <p><b>No endorsement.</b> Listed notaries are independent contractors, not employees or agents of State Notary Agent&reg;. Inclusion in this directory is not a recommendation, certification, or guarantee of any notary's qualifications, availability, or conduct. Verify any commission directly with the Florida Department of State before relying on it.</p>
+    <p style="margin-bottom:0">&copy; 2026 State Notary Agent&reg;. All rights reserved.</p>
   </div>
 </div></footer>
 
 <script>
-const $=id=>document.getElementById(id);
-let META={counties:{},total:0}, PAGE=1;
+var $=function(id){return document.getElementById(id);};
+var META={counties:{},total:0}, PAGE=1;
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-function initials(n){return String(n||'').split(' ').filter(Boolean).slice(0,2).map(function(w){return w[0];}).join('').toUpperCase();}
-function fmtDate(d){if(!d)return '\u2014';var p=d.split('-');return p[1]+'/'+p[2]+'/'+p[0];}
+function fmtDate(d){if(!d)return '\u2014';var p=String(d).split('-');return p.length===3?p[1]+'/'+p[2]+'/'+p[0]:'\u2014';}
+function num(n){return (n||0).toLocaleString();}
 
 async function loadMeta(){
   try{
     META=await (await fetch('/api/meta')).json();
-    $('sTotal').textContent=(META.total||0).toLocaleString();
-    $('sCounties').textContent=Object.keys(META.counties||{}).length;
-    $('gen').textContent=META.generated?new Date(META.generated).toLocaleDateString():'\u2014';
-    var cs=Object.entries(META.counties||{}).sort(function(a,b){return b[1]-a[1];});
-    var opts=cs.map(function(e){return e[0];}).sort().map(function(c){return '<option>'+esc(c)+'</option>';}).join('');
-    $('county').insertAdjacentHTML('beforeend',opts);
-    $('countyGrid').innerHTML=cs.map(function(e){
-      return '<button class="cty" onclick="pickCounty(\''+esc(e[0]).replace(/'/g,"\\'")+'\')"><b>'+esc(e[0])+'</b><span>'+e[1].toLocaleString()+'</span></button>';
+    var nC=Object.keys(META.counties||{}).length;
+    $('kTotal').textContent=num(META.total); $('mTotal').textContent=num(META.total);
+    $('kCounties').textContent=nC; $('mCounties').textContent=nC;
+    $('kClaimed').textContent=num(META.claimed);
+    $('gen').textContent=META.generated?new Date(META.generated).toLocaleDateString('en-US'):'\u2014';
+    var cs=Object.entries(META.counties||{});
+    var alpha=cs.slice().sort(function(a,b){return a[0].localeCompare(b[0]);});
+    $('county').insertAdjacentHTML('beforeend',alpha.map(function(e){return '<option>'+esc(e[0])+'</option>';}).join(''));
+    $('cidx').innerHTML=alpha.map(function(e){
+      return '<button onclick="pickCounty(\''+esc(e[0]).replace(/'/g,"\\'")+'\')">'+esc(e[0])+'<span>'+num(e[1])+'</span></button>';
     }).join('');
   }catch(e){console.error(e);}
 }
 
-function card(n){
-  var svc=n.services||[], badges=n.badges||[];
-  return '<article class="card'+(n.featured?' featured':'')+'">'+
-    (n.featured?'<span class="ribbon">\u2605 Featured in '+esc(n.county||'Florida')+'</span>':'')+
-    '<div class="chead"><div class="avatar">'+esc(initials(n.name))+'</div>'+
-      '<div><p class="cname">'+esc(n.name)+'</p>'+
-      '<p class="cloc">'+esc(n.city||'\u2014')+', FL'+(n.county?' \u00b7 '+esc(n.county)+' County':'')+(n.zip?' \u00b7 '+esc(n.zip):'')+'</p></div></div>'+
-    '<div class="badges">'+
-      (n.claimed?'<span class="badge">Claimed &amp; verified</span>':'<span class="badge grey">State record</span>')+
-      badges.map(function(b){return '<span class="badge'+(/Real Estate/.test(b)?' gold':/RON/.test(b)?' green':'')+'">'+esc(b)+'</span>';}).join('')+
-    '</div>'+
-    (n.blurb?'<p class="svc">'+esc(n.blurb)+'</p>':'')+
-    (svc.length?'<p class="svc"><b>Services:</b> '+svc.map(esc).join(' \u00b7 ')+'</p>':'')+
-    (n.covers?'<p class="svc"><b>Covers:</b> '+esc(n.covers)+'</p>':'')+
-    '<p class="meta"><b>Commission</b> '+esc(n.commission||'\u2014')+' \u00b7 <b>Expires</b> '+fmtDate(n.expires)+
-      (n.bondAgency?' \u00b7 <b>Bond</b> '+esc(n.bondAgency):'')+'</p>'+
-    '<div class="cfoot">'+
-      (n.claimed
-        ? '<span class="meta">'+esc(n.fee||'Contact for rates')+'</span><button class="btn sm" onclick="openReq(\''+esc(n.name).replace(/'/g,"\\'")+'\')">Request</button>'
-        : '<span class="unclaimed">Unclaimed listing</span><button class="btn sm grey" onclick="openClaim(\''+esc(n.commission||'')+'\')">Is this you?</button>')+
-    '</div></article>';
+function row(n){
+  var svc=n.services||[], claimed=!!n.claimed, feat=!!n.featured;
+  var tags='';
+  if(feat) tags+='<span class="tag feat">Featured</span>';
+  tags+= claimed?'<span class="tag claim">Claimed</span>':'<span class="tag rec">State record</span>';
+  if(claimed&&n.ron) tags+='<span class="tag ron">RON</span>';
+  var svcTxt=svc.length?'<div class="sub">'+svc.map(esc).join(', ')+'</div>':'';
+  var action=claimed
+    ? '<div style="margin-top:6px"><button class="btn sm" onclick="openReq(\''+esc(n.name).replace(/'/g,"\\'")+'\')">Contact</button></div>'
+    : '<div style="margin-top:6px"><button class="btn sm sec" onclick="openClaim(\''+esc(n.commission||'')+'\')">Claim</button></div>';
+  return '<tr'+(feat?' class="feat"':'')+'>'+
+    '<td><div class="nm">'+esc(n.name)+'</div>'+(n.covers?'<div class="sub">Covers: '+esc(n.covers)+'</div>':'')+'</td>'+
+    '<td>'+esc(n.city||'\u2014')+'<div class="sub">'+esc(n.county?n.county+' County':'\u2014')+(n.zip?' &middot; '+esc(n.zip):'')+'</div></td>'+
+    '<td class="mono">'+esc(n.commission||'\u2014')+'</td>'+
+    '<td class="mono">'+fmtDate(n.expires)+'</td>'+
+    '<td class="mono">'+esc(n.bondAgency||'\u2014')+'</td>'+
+    '<td>'+tags+svcTxt+action+'</td></tr>';
 }
 
 async function go(p){
   PAGE=p||1;
-  $('results').innerHTML=new Array(6).fill('<div class="skel"></div>').join('');
-  var qs=new URLSearchParams({q:$('q').value.trim(),county:$('county').value,service:$('service').value,page:PAGE,per:'24'});
+  var sk='<tr class="skelrow"><td colspan="6"><span class="sk"></span></td></tr>';
+  $('rows').innerHTML=new Array(8).fill(sk).join('');
+  var qs=new URLSearchParams({q:$('q').value.trim(),county:$('county').value,service:$('service').value,page:PAGE,per:'25'});
   try{
     var d=await (await fetch('/api/notaries?'+qs)).json();
-    $('count').textContent=d.total.toLocaleString()+(d.total===1?' notary':' notaries');
-    $('results').innerHTML=d.results.length?d.results.map(card).join('')
-      :'<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);border:2px dashed var(--line);border-radius:12px;background:#fff"><b>No notaries matched.</b><br>Try a different county, or search by last name.</div>';
+    $('count').textContent=num(d.total)+(d.total===1?' record':' records')+(d.pages>1?' \u00b7 page '+num(d.page)+' of '+num(d.pages):'');
+    $('rows').innerHTML=d.results.length?d.results.map(row).join('')
+      :'<tr><td colspan="6" class="empty"><b>No records matched your search criteria.</b><br>Try a different county, or search by last name only.</td></tr>';
     $('pager').innerHTML=d.pages>1
-      ? '<button onclick="go('+(d.page-1)+')" '+(d.page<=1?'disabled':'')+'>\u2190 Prev</button>'+
-        '<span class="now">Page '+d.page.toLocaleString()+' of '+d.pages.toLocaleString()+'</span>'+
-        '<button onclick="go('+(d.page+1)+')" '+(d.page>=d.pages?'disabled':'')+'>Next \u2192</button>'
+      ? '<button onclick="go(1)" '+(d.page<=1?'disabled':'')+'>&laquo; First</button>'+
+        '<button onclick="go('+(d.page-1)+')" '+(d.page<=1?'disabled':'')+'>&lsaquo; Previous</button>'+
+        '<span class="now">'+num(d.page)+' / '+num(d.pages)+'</span>'+
+        '<button onclick="go('+(d.page+1)+')" '+(d.page>=d.pages?'disabled':'')+'>Next &rsaquo;</button>'+
+        '<button onclick="go('+d.pages+')" '+(d.page>=d.pages?'disabled':'')+'>Last &raquo;</button>'
       : '';
-  }catch(e){ $('results').innerHTML='<div style="grid-column:1/-1;color:var(--muted)">Search unavailable. Reload the page.</div>'; }
+    window.scrollTo({top:document.getElementById('search').offsetTop-10,behavior:'smooth'});
+  }catch(e){ $('rows').innerHTML='<tr><td colspan="6" class="empty">Search is temporarily unavailable. Please reload the page.</td></tr>'; }
 }
-function pickCounty(c){ $('county').value=c; $('q').value=''; go(1); $('find').scrollIntoView(); }
+function pickCounty(c){ $('county').value=c; $('q').value=''; go(1); }
+function reset(){ $('q').value=''; $('county').value=''; $('service').value=''; go(1); }
 
 var mode='request';
-function show(t,w,note,msgLabel,showComm){
-  $('mTitle').textContent=t; $('mWho').textContent=w; $('mNote').textContent=note;
+function openX(t,w,note,msgLabel,showComm){
+  $('xTitle').textContent=t; $('xWho').textContent=w; $('xNote').textContent=note;
   $('lMsg').textContent=msgLabel; $('fCommWrap').style.display=showComm?'':'none';
   $('modal').classList.add('on');
 }
-function openReq(name){ mode='request'; show('Request '+name,'Your request goes directly to this notary.','Demonstration form \u2014 connect a backend or email handler before going live.','What do you need notarized?',false); }
-function openClaim(comm){ mode='claim'; show('Claim your listing','Free, forever. We verify your commission against Florida Department of State records before publishing any changes.','Demonstration form \u2014 connect a backend before going live.','Services you offer and counties you cover',true); if(comm) $('fComm').value=comm; }
-function openRemove(){ mode='remove'; show('Request removal','We honor removal requests. Your commission remains public record with the state, but we will delist you here.','Demonstration form \u2014 connect a backend before going live.','Anything you want us to know (optional)',true); }
-function closeModal(){ $('modal').classList.remove('on'); }
-$('modal').addEventListener('click',function(e){ if(e.target===$('modal')) closeModal(); });
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+function openReq(name){mode='request';openX('Contact '+name,'Your request is sent directly to this notary.','This form is a demonstration. Connect a backend or email handler before accepting live requests.','Document type and preferred date',false);}
+function openClaim(comm){mode='claim';openX('Claim a listing','Free of charge. Commission details are verified against Florida Department of State records before any change is published.','This form is a demonstration. Connect a backend before accepting live claims.','Services offered and counties covered',true);if(comm)$('fComm').value=comm;}
+function openRemove(){mode='remove';openX('Request removal','Removal is free. Your commission remains a public record with the State of Florida; this request delists you from this directory only.','This form is a demonstration. Connect a backend before accepting live requests.','Reason (optional)',true);}
+function closeModal(){$('modal').classList.remove('on');}
+$('modal').addEventListener('click',function(e){if(e.target===$('modal'))closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 function submitForm(){
   var n=$('fName').value.trim(), e=$('fEmail').value.trim();
-  if(!n||!e){alert('Please add your name and email.');return;}
-  console.log('SUBMIT \u2192',{mode:mode,name:n,email:e,phone:$('fPhone').value,commission:$('fComm').value,message:$('fMsg').value});
+  if(!n||!e){alert('Please provide your name and email address.');return;}
+  console.log('SUBMIT \u2192',{mode:mode,name:n,email:e,phone:$('fPhone').value,commission:$('fComm').value,details:$('fMsg').value});
   document.querySelector('.sheet').innerHTML=
-    '<h3 style="margin:0 0 8px;font-family:Georgia,serif">Thank you, '+esc(n.split(' ')[0])+'.</h3>'+
-    '<p style="color:var(--muted)">We\u2019ve received your '+(mode==='claim'?'claim':mode==='remove'?'removal request':'request')+' and will follow up by email.</p>'+
-    '<div class="note" style="margin-top:16px">Demo confirmation \u2014 connect a backend to actually deliver it.</div>'+
-    '<div class="mfoot"><button class="btn" onclick="location.reload()">Done</button></div>';
+    '<div class="hd"><h3>Request received</h3><p>Reference will be sent by email.</p></div>'+
+    '<div class="bd"><p style="margin:0 0 12px">Thank you, '+esc(n.split(' ')[0])+'. Your '+(mode==='claim'?'claim':mode==='remove'?'removal request':'request')+' has been recorded.</p>'+
+    '<div class="callout">Demonstration confirmation. Connect a backend to deliver this for real.</div></div>'+
+    '<div class="mfoot"><button class="btn" onclick="location.reload()">Close</button></div>';
 }
 
 var t;

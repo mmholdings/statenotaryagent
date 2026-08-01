@@ -40,6 +40,109 @@ ENHANCED.filter(e => !known.has(e.id)).forEach(e => {
   DATA.total++;
 });
 
+
+// ---------------------------------------------------------------
+// Server-rendered location pages — the SEO engine.
+// Real HTML with real listings, not JS-loaded, so search engines index it.
+// ---------------------------------------------------------------
+const SITE = process.env.SITE_URL || 'https://www.statenotaryagent.com';
+let SHELL_CSS = '';
+try {
+  const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const m = home.match(/<style>([\s\S]*?)<\/style>/);
+  if (m) SHELL_CSS = m[1];
+} catch (_) {}
+
+const slug = t => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const esc = t => String(t == null ? '' : t).replace(/[&<>"']/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const usDate = d => { if (!d) return '—'; const p = String(d).split('-'); return p.length === 3 ? `${p[1]}/${p[2]}/${p[0]}` : '—'; };
+
+// build lookup maps once
+const BY_COUNTY = {}, BY_CITY = {};
+DATA.notaries.forEach(n => {
+  if (n.county) (BY_COUNTY[slug(n.county)] ||= { name: n.county, rows: [] }).rows.push(n);
+  if (n.city)   (BY_CITY[slug(n.city)]     ||= { name: n.city, county: n.county, rows: [] }).rows.push(n);
+});
+Object.values(BY_COUNTY).forEach(o => o.rows.sort((a, b) => (a.last || '').localeCompare(b.last || '')));
+Object.values(BY_CITY).forEach(o => o.rows.sort((a, b) => (a.last || '').localeCompare(b.last || '')));
+const CITY_PAGES = Object.entries(BY_CITY).filter(([, o]) => o.rows.length >= 15);
+
+function locationPage({ title, h1, intro, rows, canonical, crumb, related }) {
+  const shown = rows.slice(0, 250);
+  const body = shown.map(n => {
+    const e = ENH.get(n.id) || {};
+    const claimed = !!ENH.get(n.id);
+    return `<tr${e.featured ? ' class="feat"' : ''}>
+      <td><span class="nm">${esc(n.name)}</span></td>
+      <td>${esc(n.city || '—')}<div class="sub">${esc(n.county ? n.county + ' County' : '—')}${n.zip ? ' &middot; ' + esc(n.zip) : ''}</div></td>
+      <td class="mono">${esc(n.commission || '—')}</td>
+      <td class="mono">${usDate(n.expires)}</td>
+      <td class="mono">${esc(n.bondAgency || '—')}</td>
+      <td>${e.featured ? '<span class="tag feat">Featured</span>' : ''}${claimed ? '<span class="tag claim">Claimed</span>' : '<span class="tag rec">Of record</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  const ld = {
+    '@context': 'https://schema.org', '@type': 'CollectionPage',
+    name: title, url: canonical,
+    description: intro.replace(/<[^>]+>/g, '').slice(0, 300),
+    isPartOf: { '@type': 'WebSite', name: 'State Notary Agent', url: SITE },
+    about: { '@type': 'Thing', name: 'Notaries Public in Florida' },
+  };
+
+  return `<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(intro.replace(/<[^>]+>/g, '').slice(0, 155))}">
+<link rel="canonical" href="${esc(canonical)}">
+<meta property="og:title" content="${esc(title)}"><meta property="og:type" content="website">
+<meta property="og:url" content="${esc(canonical)}">
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+<style>${SHELL_CSS}</style></head><body>
+<div class="edition">State of Florida &middot; Register of Commissioned Notaries Public &middot; 2026 Edition</div>
+<header class="letterhead"><div class="wrap">
+  <a href="/" style="text-decoration:none"><img src="/logo.png" alt="State Notary Agent seal">
+  <div class="name" style="color:var(--green)">State Notary Agent<sup>&reg;</sup></div></a>
+  <div class="tag">The Florida Notary Public Directory</div>
+</div></header>
+<nav class="nav"><div class="wrap">
+  <a href="/#register">The Register</a><a href="/#counties">County Index</a>
+  <a href="/#suppliers">Suppliers</a><a href="/#rates">Rate Card</a><a href="/#notaries">For Notaries</a>
+</div></nav>
+<div class="intro"><div class="wrap">
+  <p style="font-size:12.5px;color:var(--faint);margin-bottom:10px">${crumb}</p>
+  <h1>${esc(h1)}</h1><p>${intro}</p>
+  <div class="ledger">
+    <div><b>${rows.length.toLocaleString()}</b><span>Commissions of record</span></div>
+    <div><b>${shown.length.toLocaleString()}</b><span>Listed on this page</span></div>
+    <div><b>Free</b><span>Public access</span></div>
+  </div>
+</div></div>
+<section><div class="wrap">
+  <div class="tcap"><h3>Entries</h3><div class="n">${rows.length.toLocaleString()} of record</div></div>
+  <div class="tblwrap"><table><thead><tr>
+    <th style="width:27%">Notary Public</th><th style="width:20%">Residence</th>
+    <th style="width:16%">Commission</th><th style="width:12%">Expires</th>
+    <th style="width:12%">Bond Agency</th><th style="width:13%">Standing</th>
+  </tr></thead><tbody>${body}</tbody></table></div>
+  ${rows.length > shown.length ? `<p class="hint">Showing the first ${shown.length.toLocaleString()} of ${rows.length.toLocaleString()} entries. <a href="/#register">Search the full register &rsaquo;</a></p>` : ''}
+</div></section>
+${related ? `<section class="band"><div class="wrap"><div class="sechead"><h2>Nearby</h2></div><div class="cidx">${related}</div></div></section>` : ''}
+<section><div class="wrap" style="text-align:center">
+  <p class="lede" style="margin:0 auto 18px">Are you one of the notaries listed above? Claiming your entry is free and lets the public reach you directly.</p>
+  <a class="btn" href="/#notaries">Claim Your Entry</a>
+</div></section>
+<footer><div class="wrap">
+  <div class="fnotice"><b>Notice.</b> State Notary Agent&reg; is a privately operated directory. It is <b>not a government agency</b> and is not affiliated with or endorsed by the State of Florida. Official records are maintained by the <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">Florida Department of State</a>.</div>
+  <div class="legal">
+    <p><b>Source and privacy.</b> Entries are derived from the Florida Department of State's published Notaries Public journals, a public record. Street addresses, telephone numbers, and dates of birth are not published, and records flagged with an address restriction under Fla. Stat. &sect;119.071(4)(d) are excluded.</p>
+    <p><b>No endorsement.</b> Listed notaries are independent contractors and not employees or agents of State Notary Agent&reg;. Inclusion is not a recommendation or guarantee. Verify any commission directly with the Florida Department of State.</p>
+    <p style="margin-bottom:0">&copy; 2026 State Notary Agent&reg;. <a href="/">Return to the register</a>.</p>
+  </div>
+</div></footer></body></html>`;
+}
+
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8',
@@ -112,6 +215,56 @@ http.createServer((req, res) => {
       if (n.expires && n.expires <= in90) expiring++;
     });
     return json(res, { total: DATA.total, newly, expiring });
+  }
+
+
+  // ---- SEO location pages ----
+  let m;
+  if ((m = p.match(/^\/notaries\/([a-z0-9-]+)-county\/?$/i))) {
+    const c = BY_COUNTY[m[1].toLowerCase()];
+    if (c) {
+      const near = Object.entries(BY_COUNTY).filter(([k]) => k !== m[1].toLowerCase())
+        .sort((a, b) => b[1].rows.length - a[1].rows.length).slice(0, 12)
+        .map(([k, o]) => `<button onclick="location.href='/notaries/${k}-county'">${esc(o.name)} County<span>${o.rows.length}</span></button>`).join('');
+      return res.writeHead(200, { 'Content-Type': TYPES['.html'], 'Cache-Control': 'public, max-age=3600' })
+        .end(locationPage({
+          title: `Notaries Public in ${c.name} County, Florida | State Notary Agent`,
+          h1: `Notaries Public in ${c.name} County, Florida`,
+          intro: `A public register of <b>${c.rows.length.toLocaleString()} commissioned notaries public</b> in ${esc(c.name)} County, Florida, compiled from Florida Department of State records. Each entry shows the commission number and expiration date so it can be verified independently. Free to search.`,
+          rows: c.rows, canonical: `${SITE}/notaries/${m[1].toLowerCase()}-county`,
+          crumb: `<a href="/">Register</a> &rsaquo; <a href="/#counties">Counties</a> &rsaquo; ${esc(c.name)} County`,
+          related: near,
+        }));
+    }
+  }
+  if ((m = p.match(/^\/notaries\/([a-z0-9-]+)-fl\/?$/i))) {
+    const c = BY_CITY[m[1].toLowerCase()];
+    if (c) {
+      const near = CITY_PAGES.filter(([k]) => k !== m[1].toLowerCase() && c.county && BY_CITY[k].county === c.county)
+        .slice(0, 12)
+        .map(([k, o]) => `<button onclick="location.href='/notaries/${k}-fl'">${esc(o.name)}<span>${o.rows.length}</span></button>`).join('');
+      return res.writeHead(200, { 'Content-Type': TYPES['.html'], 'Cache-Control': 'public, max-age=3600' })
+        .end(locationPage({
+          title: `Notaries Public in ${c.name}, FL | Mobile & Online Notaries | State Notary Agent`,
+          h1: `Notaries Public in ${c.name}, Florida`,
+          intro: `A public register of <b>${c.rows.length.toLocaleString()} commissioned notaries public</b> in ${esc(c.name)}${c.county ? `, ${esc(c.county)} County` : ''}, Florida. Compiled from Florida Department of State records and free to search. Includes mobile notaries, remote online notaries, and loan signing agents.`,
+          rows: c.rows, canonical: `${SITE}/notaries/${m[1].toLowerCase()}-fl`,
+          crumb: `<a href="/">Register</a> &rsaquo; ${c.county ? `<a href="/notaries/${slug(c.county)}-county">${esc(c.county)} County</a> &rsaquo; ` : ''}${esc(c.name)}`,
+          related: near,
+        }));
+    }
+  }
+  if (p === '/sitemap.xml') {
+    const urls = [`${SITE}/`]
+      .concat(Object.keys(BY_COUNTY).map(k => `${SITE}/notaries/${k}-county`))
+      .concat(CITY_PAGES.map(([k]) => `${SITE}/notaries/${k}-fl`));
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+      urls.map(u => `  <url><loc>${u}</loc><changefreq>weekly</changefreq></url>`).join('\n') + `\n</urlset>`;
+    return res.writeHead(200, { 'Content-Type': 'application/xml; charset=utf-8' }).end(xml);
+  }
+  if (p === '/robots.txt') {
+    return res.writeHead(200, { 'Content-Type': 'text/plain' })
+      .end(`User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${SITE}/sitemap.xml\n`);
   }
 
   if (p.endsWith('/')) p += 'index.html';

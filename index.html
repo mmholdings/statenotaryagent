@@ -30,7 +30,7 @@ h1,h2,h3,h4{margin:0;font-weight:700;font-family:var(--serif)}
 
 /* ---------- letterhead ---------- */
 .letterhead{background:var(--paper-3);border-bottom:1px solid var(--rule);padding:26px 0 20px;text-align:center}
-.letterhead svg{width:82px;height:82px;display:block;margin:0 auto 12px}
+.letterhead img{width:96px;height:96px;display:block;margin:0 auto 12px}
 .letterhead .name{font-size:33px;letter-spacing:.13em;text-transform:uppercase;line-height:1.1;color:var(--green)}
 .letterhead .name sup{font-size:12px;letter-spacing:0;vertical-align:super}
 .letterhead .tag{font-size:14px;color:var(--muted);font-style:italic;margin-top:7px}
@@ -170,6 +170,14 @@ footer h5{color:#EFE6CC;font-size:11.5px;letter-spacing:.13em;text-transform:upp
   padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.22)}
 footer a{color:#C3B792;text-decoration:none;display:block;margin-bottom:7px;cursor:pointer}
 footer a:hover{color:#fff;text-decoration:underline}
+.fnotice{background:var(--gold-2);border:1px solid var(--gold-3);padding:13px 18px;margin:0 0 22px;
+  font-size:13px;color:#4C3D14;text-align:center;line-height:1.6}
+.fnotice b{font-weight:700}
+.fnotice a{color:#6B4E12;text-decoration:underline}
+.fact{text-align:center;padding:0 0 22px;border-bottom:1px solid rgba(255,255,255,.2);margin-bottom:18px}
+.fact .lbl{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:#9E937A;margin-bottom:11px}
+.fact .btn{background:var(--paper-3);color:var(--green);border-color:var(--gold-3)}
+.fact .btn:hover{background:var(--gold-2)}
 .legal{border-top:1px solid rgba(255,255,255,.2);padding-top:18px;font-size:12px;color:#9E937A;line-height:1.62}
 .legal p{margin:0 0 9px}
 .legal b{color:#D6CBAB}
@@ -178,35 +186,11 @@ footer a:hover{color:#fff;text-decoration:underline}
 </head>
 <body>
 
-<svg style="display:none"><symbol id="seal" viewBox="0 0 200 200">
-  <defs>
-    <path id="aT" d="M100,100 m-74,0 a74,74 0 1,1 148,0" fill="none"/>
-    <path id="aB" d="M100,100 m-66,0 a66,66 0 0,0 132,0" fill="none"/>
-  </defs>
-  <circle cx="100" cy="100" r="99" fill="#1C3A2A"/>
-  <circle cx="100" cy="100" r="93" fill="none" stroke="#C9A84E" stroke-width="1.8"/>
-  <circle cx="100" cy="100" r="88.5" fill="none" stroke="#C9A84E" stroke-width=".8" opacity=".7"/>
-  <circle cx="100" cy="100" r="57" fill="none" stroke="#C9A84E" stroke-width="1.4"/>
-  <circle cx="100" cy="100" r="53" fill="none" stroke="#C9A84E" stroke-width=".7" opacity=".6"/>
-  <text font-family="Georgia,serif" font-size="17" font-weight="700" letter-spacing="3.3" fill="#DFC98A"><textPath href="#aT" startOffset="50%" text-anchor="middle">STATE NOTARY AGENT</textPath></text>
-  <text font-family="Georgia,serif" font-size="9.2" font-weight="600" letter-spacing="1.8" fill="#DFC98A"><textPath href="#aB" startOffset="50%" text-anchor="middle">FLORIDA PUBLIC NOTARY DIRECTORY</textPath></text>
-  <circle cx="100" cy="100" r="45" fill="#DFC98A"/>
-  <g fill="#1C3A2A">
-    <ellipse cx="100" cy="74" rx="3.4" ry="3.4"/><rect x="98.6" y="76" width="2.8" height="5"/>
-    <path d="M89 81h22l-2.6 5H91.6z"/><rect x="92" y="87" width="16" height="30" rx="1.2"/>
-    <path d="M86 118h28l2.5 5H83.5z"/><path d="M81 124h38v3.2H81z"/>
-  </g>
-  <g stroke="#1C3A2A" stroke-width="1.5" fill="none" stroke-linecap="round">
-    <path d="M78 118c-8-7-11-17-10-27"/><path d="M122 118c8-7 11-17 10-27"/>
-    <path d="M70 96c3-1 6 0 7 3M71 103c3-1 6 0 7 3M73 110c3-1 6 0 7 3"/>
-    <path d="M130 96c-3-1-6 0-7 3M129 103c-3-1-6 0-7 3M127 110c-3-1-6 0-7 3"/>
-  </g>
-</symbol></svg>
 
 <div class="edition">State of Florida &middot; Register of Commissioned Notaries Public &middot; 2026 Edition</div>
 
 <header class="letterhead"><div class="wrap">
-  <svg><use href="#seal"/></svg>
+  <img src="logo.png" alt="State Notary Agent seal">
   <div class="name">State Notary Agent<sup>&reg;</sup></div>
   <div class="tag">The Florida Notary Public Directory</div>
   <div class="dbl"><div class="est">Compiled from the records of the Florida Department of State</div></div>
@@ -220,10 +204,6 @@ footer a:hover{color:#fff;text-decoration:underline}
   <a onclick="openClaim()">Claim a Listing</a>
 </div></nav>
 
-<div class="notice"><div class="wrap">
-  <b>Notice.</b> State Notary Agent&reg; is a privately operated directory. It is <b>not a government agency</b> and is not affiliated with or endorsed by the State of Florida. Official records are maintained by the
-  <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">Florida Department of State</a>.
-</div></div>
 
 <div class="intro"><div class="wrap">
   <h1>A Public Register of Commissioned Notaries in Florida</h1>
@@ -231,7 +211,6 @@ footer a:hover{color:#fff;text-decoration:underline}
   <div class="ledger">
     <div><b id="kTotal">&mdash;</b><span>Commissions of record</span></div>
     <div><b id="kCounties">&mdash;</b><span>Counties represented</span></div>
-    <div><b id="kClaimed">&mdash;</b><span>Listings claimed</span></div>
     <div><b id="kGen">&mdash;</b><span>Records revised</span></div>
   </div>
 </div></div>
@@ -300,8 +279,7 @@ footer a:hover{color:#fff;text-decoration:underline}
     <div class="r"><div><h4>Removal</h4><p>Delisting from this register at any time, for any reason.</p></div><div class="v">No charge</div></div>
   </div>
   <div class="ctr">
-    <button class="btn" onclick="openClaim()">Claim Your Entry</button>
-    <button class="btn sec" style="margin-left:8px" onclick="openRemove()">Request Removal</button></div>
+    <button class="btn" onclick="openClaim()">Claim Your Entry</button></div>
 </div></section>
 
 <div class="modal" id="modal"><div class="sheet">
@@ -322,7 +300,7 @@ footer a:hover{color:#fff;text-decoration:underline}
   <div class="cols">
     <div>
       <div style="display:flex;gap:13px;align-items:center;margin-bottom:12px">
-        <svg style="width:52px;height:52px;flex:none"><use href="#seal"/></svg>
+        <img src="logo.png" alt="" style="width:52px;height:52px;flex:none">
         <div><div style="color:#EFE6CC;font-size:15px;letter-spacing:.09em;text-transform:uppercase">State Notary Agent&reg;</div>
         <div style="font-size:12px;color:#9E937A;font-style:italic">The Florida Notary Public Directory</div></div>
       </div>
@@ -334,6 +312,15 @@ footer a:hover{color:#fff;text-decoration:underline}
       <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">FL DOS notary search</a>
       <a href="https://dos.fl.gov/sunbiz/other-services/notaries/" target="_blank" rel="noopener">FL DOS notary information</a>
       <a href="https://www.flsenate.gov/Laws/Statutes/2025/Chapter117/All" target="_blank" rel="noopener">Fla. Stat. Chapter 117</a></div>
+  </div>
+  <div class="fnotice">
+    <b>Notice.</b> State Notary Agent&reg; is a privately operated directory. It is <b>not a government agency</b> and is not affiliated with or endorsed by the State of Florida. Official records are maintained by the
+    <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">Florida Department of State</a>.
+  </div>
+  <div class="fact">
+    <div class="lbl">Listed in this register?</div>
+    <button class="btn" onclick="openClaim()">Claim Your Entry</button>
+    <button class="btn" style="margin-left:8px" onclick="openRemove()">Request Removal</button>
   </div>
   <div class="legal">
     <p><b>Not a government website.</b> State Notary Agent&reg; is a privately operated commercial directory and referral service. It is not a government agency and is not affiliated with, endorsed by, or acting on behalf of the State of Florida, the Florida Department of State, or any other public body. Official notary commission records are maintained solely by the Florida Department of State.</p>
@@ -356,7 +343,6 @@ async function loadMeta(){
     var nC=Object.keys(META.counties||{}).length;
     $('kTotal').textContent=num(META.total);
     $('kCounties').textContent=nC;
-    $('kClaimed').textContent=num(META.claimed);
     $('kGen').textContent=META.generated?new Date(META.generated).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'\u2014';
     var alpha=Object.entries(META.counties||{}).sort(function(a,b){return a[0].localeCompare(b[0]);});
     $('county').insertAdjacentHTML('beforeend',alpha.map(function(e){return '<option>'+esc(e[0])+'</option>';}).join(''));

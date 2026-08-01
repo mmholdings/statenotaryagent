@@ -1,23 +1,71 @@
 {
   "note": "Paid placements. Each slot renders in the Suppliers section and rotates through the register banner. Set live:true and fill fields when a sponsor signs.",
   "slots": [
-    { "id": "bond-eo", "category": "Bonds & E&O Insurance", "live": false,
-      "name": "", "blurb": "", "url": "", "offer": "",
-      "rate": "$499/mo", "reach": "Category exclusive" },
-    { "id": "supplies", "category": "Seals, Stamps & Journals", "live": false,
-      "name": "", "blurb": "", "url": "", "offer": "",
-      "rate": "$399/mo", "reach": "Category exclusive" },
-    { "id": "training", "category": "Training & Certification", "live": false,
-      "name": "", "blurb": "", "url": "", "offer": "",
-      "rate": "$399/mo", "reach": "Category exclusive" },
-    { "id": "ron", "category": "RON Platforms", "live": false,
-      "name": "", "blurb": "", "url": "", "offer": "",
-      "rate": "$349/mo", "reach": "Category exclusive" },
-    { "id": "signing", "category": "Signing Services Hiring Notaries", "live": false,
-      "name": "", "blurb": "", "url": "", "offer": "",
-      "rate": "$299/mo", "reach": "Per metro" },
-    { "id": "background", "category": "Background Screening", "live": false,
-      "name": "", "blurb": "", "url": "", "offer": "",
-      "rate": "$299/mo", "reach": "Category exclusive" }
+    {
+      "id": "bond-eo",
+      "category": "Bonds & E&O Insurance",
+      "live": false,
+      "name": "",
+      "blurb": "",
+      "url": "",
+      "offer": "",
+      "rate": "$499/mo",
+      "reach": "Category exclusive"
+    },
+    {
+      "id": "supplies",
+      "category": "Seals, Stamps & Journals",
+      "live": false,
+      "name": "",
+      "blurb": "",
+      "url": "",
+      "offer": "",
+      "rate": "$399/mo",
+      "reach": "Category exclusive"
+    },
+    {
+      "id": "training",
+      "category": "Training & Certification",
+      "live": false,
+      "name": "",
+      "blurb": "",
+      "url": "",
+      "offer": "",
+      "rate": "$399/mo",
+      "reach": "Category exclusive"
+    },
+    {
+      "id": "ron",
+      "category": "RON Platforms",
+      "live": true,
+      "name": "RON Closing",
+      "blurb": "A Florida remote online notarization platform built for loan signing agents. Conduct compliant RON sessions with credential analysis, knowledge-based authentication, recorded audio-video, and retained session records.",
+      "url": "https://ronclosing.com",
+      "offer": "Florida-commissioned RON notaries welcome",
+      "rate": "$349/mo",
+      "reach": "Category exclusive"
+    },
+    {
+      "id": "signing",
+      "category": "Signing Services Hiring Notaries",
+      "live": true,
+      "name": "RON Closing \u2014 Signing Assignments",
+      "blurb": "Signing assignments for commissioned Florida notaries \u2014 remote online sessions and in-person appointments dispatched to agents statewide. Loan signings, real estate closings, and general notary work.",
+      "url": "https://ronclosing.com",
+      "offer": "Now accepting Florida notaries",
+      "rate": "$299/mo",
+      "reach": "Per metro"
+    },
+    {
+      "id": "background",
+      "category": "Background Screening",
+      "live": false,
+      "name": "",
+      "blurb": "",
+      "url": "",
+      "offer": "",
+      "rate": "$299/mo",
+      "reach": "Category exclusive"
+    }
   ]
 }

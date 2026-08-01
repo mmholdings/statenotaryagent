@@ -143,6 +143,156 @@ ${related ? `<section class="band"><div class="wrap"><div class="sechead"><h2>Ne
 </div></footer></body></html>`;
 }
 
+
+// ---------------------------------------------------------------
+// Guides — SEO + AEO content engine. Article + FAQPage schema so
+// answer engines can extract clean Q&A pairs.
+// ---------------------------------------------------------------
+let POSTS = { posts: [], disclaimer: '' };
+try { POSTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'posts.json'), 'utf8')); } catch (_) {}
+const POST = new Map(POSTS.posts.map(p => [p.slug, p]));
+
+function chrome(active) {
+  return `<div class="edition">State of Florida &middot; Register of Commissioned Notaries Public &middot; 2026 Edition</div>
+<header class="letterhead"><div class="wrap">
+  <a href="/" style="text-decoration:none"><img src="/logo.png" alt="State Notary Agent seal">
+  <div class="name" style="color:var(--green)">State Notary Agent<sup>&reg;</sup></div></a>
+  <div class="tag">The Florida Notary Public Directory</div>
+</div></header>
+<nav class="nav"><div class="wrap">
+  <a href="/#register">The Register</a><a href="/#counties">County Index</a>
+  <a href="/guides"${active === 'guides' ? ' style="background:var(--green-2);color:#fff"' : ''}>Guides</a>
+  <a href="/#suppliers">Suppliers</a><a href="/#rates">Rate Card</a><a href="/#notaries">For Notaries</a>
+</div></nav>`;
+}
+
+function pageFoot() {
+  return `<footer><div class="wrap">
+  <div class="fnotice"><b>Notice.</b> State Notary Agent&reg; is a privately operated directory. It is <b>not a government agency</b> and is not affiliated with or endorsed by the State of Florida. Official records are maintained by the <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">Florida Department of State</a>.</div>
+  <div class="legal">
+    <p><b>Not legal advice.</b> ${esc(POSTS.disclaimer)}</p>
+    <p><b>Source and privacy.</b> Register entries derive from the Florida Department of State's published Notaries Public journals, a public record. Street addresses, telephone numbers, and dates of birth are not published, and records flagged with an address restriction under Fla. Stat. &sect;119.071(4)(d) are excluded.</p>
+    <p style="margin-bottom:0">&copy; 2026 State Notary Agent&reg;. <a href="/">Return to the register</a> &middot; <a href="/guides">All guides</a></p>
+  </div>
+</div></footer></body></html>`;
+}
+
+function guideIndex() {
+  const byCat = {};
+  POSTS.posts.forEach(p => (byCat[p.category] ||= []).push(p));
+  const ld = { '@context': 'https://schema.org', '@type': 'CollectionPage',
+    name: 'Florida Notary Guides', url: `${SITE}/guides`,
+    description: 'Plain-English guides to Florida notary law, fees, remote online notarization, and loan signing work.' };
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Florida Notary Guides | State Notary Agent</title>
+<meta name="description" content="Plain-English guides to Florida notary law: how to become a notary, what a notary may charge, remote online notarization, witness requirements, and loan signing work.">
+<link rel="canonical" href="${SITE}/guides">
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+<style>${SHELL_CSS}</style></head><body>
+${chrome('guides')}
+<div class="intro"><div class="wrap">
+  <h1>Florida Notary Guides</h1>
+  <p>Plain-English answers about Florida notary law, fees, and signing work &mdash; written against the statutes and linked to primary sources so you can check them yourself.</p>
+</div></div>
+<section><div class="wrap">
+${Object.entries(byCat).map(([cat, list]) => `
+  <div class="sechead" style="margin-top:8px"><h2>${esc(cat)}</h2></div>
+  <div class="sup" style="margin-bottom:30px">
+  ${list.map(p => `<a class="slot" href="/guides/${p.slug}" style="text-decoration:none;color:inherit">
+      <div class="cat">${esc(p.category)}</div>
+      <h4>${esc(p.title)}</h4>
+      <p>${esc(p.excerpt)}</p>
+      <div class="rate"><b style="font-family:var(--serif);font-size:14px">Read &rsaquo;</b><span>${p.faqs.length} questions answered</span></div>
+    </a>`).join('')}
+  </div>`).join('')}
+</div></section>
+${pageFoot()}`;
+}
+
+function guidePage(p) {
+  const canonical = `${SITE}/guides/${p.slug}`;
+  const article = { '@context': 'https://schema.org', '@type': 'Article',
+    headline: p.title, description: p.metaDesc, url: canonical,
+    datePublished: p.published, dateModified: p.updated,
+    inLanguage: 'en-US', about: { '@type': 'Thing', name: 'Notaries Public in Florida' },
+    publisher: { '@type': 'Organization', name: 'State Notary Agent', url: SITE, logo: { '@type': 'ImageObject', url: `${SITE}/logo.png` } },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    keywords: p.keywords.join(', ') };
+  const faq = { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: p.faqs.map(f => ({ '@type': 'Question', name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
+  const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+      { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE}/guides` },
+      { '@type': 'ListItem', position: 3, name: p.title, item: canonical }] };
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(p.metaTitle)}</title>
+<meta name="description" content="${esc(p.metaDesc)}">
+<meta name="keywords" content="${esc(p.keywords.join(', '))}">
+<link rel="canonical" href="${canonical}">
+<meta property="og:type" content="article"><meta property="og:title" content="${esc(p.metaTitle)}">
+<meta property="og:description" content="${esc(p.metaDesc)}"><meta property="og:url" content="${canonical}">
+<meta property="article:published_time" content="${p.published}">
+<meta property="article:modified_time" content="${p.updated}">
+<script type="application/ld+json">${JSON.stringify(article)}</script>
+<script type="application/ld+json">${JSON.stringify(faq)}</script>
+<script type="application/ld+json">${JSON.stringify(crumbs)}</script>
+<style>${SHELL_CSS}
+.art{max-width:760px;margin:0 auto}
+.art h2{font-size:21px;letter-spacing:.02em;color:var(--green);margin:32px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--rule-2)}
+.art p{margin:0 0 14px;font-size:16.5px}
+.art ul{margin:0 0 16px;padding-left:22px}.art li{margin-bottom:7px}
+.toc{border:1px solid var(--rule);background:var(--paper-3);padding:16px 20px;margin:0 0 28px}
+.toc div{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.toc ol{margin:0;padding-left:20px;font-size:14.5px}.toc li{margin-bottom:5px}
+.faq{border-top:3px double var(--rule);margin-top:36px;padding-top:22px}
+.faq h2{border:0;margin-top:0}
+.qa{border-bottom:1px solid var(--rule-2);padding:14px 0}
+.qa h3{font-size:16px;margin-bottom:6px;color:var(--ink)}
+.qa p{margin:0;font-size:15.5px;color:var(--ink-2)}
+.meta-line{font-size:12.5px;color:var(--faint);margin-bottom:8px;letter-spacing:.04em}
+.disc{border-left:4px solid var(--gold-3);background:var(--gold-2);padding:13px 16px;margin:30px 0 0;font-size:13px;color:#4C3D14}
+.rel{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:16px}
+.rel a{display:block;border:1px solid var(--rule);background:var(--paper-3);padding:13px 15px;text-decoration:none;color:var(--ink)}
+.rel a:hover{border-color:var(--gold-3);background:var(--gold-2)}
+.rel b{display:block;font-size:14.5px;margin-bottom:3px}.rel span{font-size:12.5px;color:var(--muted);font-style:italic}
+</style></head><body>
+${chrome('guides')}
+<div class="intro"><div class="wrap">
+  <p style="font-size:12.5px;color:var(--faint);margin-bottom:10px"><a href="/">Register</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; ${esc(p.category)}</p>
+  <h1>${esc(p.title)}</h1>
+  <p style="max-width:70ch">${esc(p.excerpt)}</p>
+</div></div>
+<section><div class="wrap"><div class="art">
+  <p class="meta-line">Published ${p.published} &middot; Updated ${p.updated} &middot; ${esc(p.category)}</p>
+  <div class="toc"><div>On this page</div><ol>
+    ${p.sections.map((x, i) => `<li><a href="#s${i}">${esc(x.h)}</a></li>`).join('')}
+    <li><a href="#faq">Frequently asked questions</a></li>
+  </ol></div>
+  ${p.sections.map((x, i) => `<h2 id="s${i}">${esc(x.h)}</h2>${x.html}`).join('')}
+
+  <div class="faq" id="faq"><h2>Frequently asked questions</h2>
+    ${p.faqs.map(f => `<div class="qa"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join('')}
+  </div>
+
+  <div class="disc"><b>Disclaimer.</b> ${esc(POSTS.disclaimer)}</div>
+
+  ${p.related && p.related.length ? `<h2 style="margin-top:34px">Related guides</h2><div class="rel">
+    ${p.related.map(r => { const q = POST.get(r); return q ? `<a href="/guides/${q.slug}"><b>${esc(q.title)}</b><span>${esc(q.excerpt.slice(0, 80))}&hellip;</span></a>` : ''; }).join('')}
+  </div>` : ''}
+
+  <div style="text-align:center;margin-top:36px;padding-top:24px;border-top:1px solid var(--rule-2)">
+    <p class="lede" style="margin:0 auto 16px">Looking for a notary in Florida? The register is free to search.</p>
+    <a class="btn" href="/#register">Search the Register</a>
+  </div>
+</div></div></section>
+${pageFoot()}`;
+}
+
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8',
@@ -218,6 +368,55 @@ http.createServer((req, res) => {
   }
 
 
+
+  // ---- guides ----
+  if (p === '/guides' || p === '/guides/') {
+    return res.writeHead(200, { 'Content-Type': TYPES['.html'], 'Cache-Control': 'public, max-age=3600' }).end(guideIndex());
+  }
+  {
+    const gm = p.match(/^\/guides\/([a-z0-9-]+)\/?$/i);
+    if (gm && POST.has(gm[1].toLowerCase())) {
+      return res.writeHead(200, { 'Content-Type': TYPES['.html'], 'Cache-Control': 'public, max-age=3600' })
+        .end(guidePage(POST.get(gm[1].toLowerCase())));
+    }
+  }
+
+  // ---- AEO: machine-readable summary for answer engines ----
+  if (p === '/llms.txt') {
+    const body = `# State Notary Agent
+
+> A free public register of commissioned notaries public in the State of Florida, compiled from Florida Department of State commission records. Privately operated; not a government agency and not affiliated with the State of Florida.
+
+Records on file: ${DATA.total.toLocaleString()} active commissions across ${Object.keys(DATA.counties).length} Florida counties.
+Cost to search: free. Cost for a notary to be listed: free. Cost to claim an entry: free.
+Source of record: Florida Department of State, Notaries Public daily journals.
+Published fields: name, notary ID, commission series and number, issue and expiration date, bonding agency, city, county, ZIP.
+Withheld by policy: street address, telephone number, date of birth. Records with an address restriction under Fla. Stat. 119.071(4)(d) are excluded entirely.
+
+## What this site is
+- A directory. Members of the public search it and contact notaries directly.
+- Not a signing service. It does not dispatch loan closings.
+- Florida notaries seeking signing assignments are directed to RON Closing (https://ronclosing.com), which dispatches remote online and in-person signings to commissioned Florida notaries.
+
+## Key Florida facts published here
+- A Florida notary commission runs four years and requires a $7,500 surety bond (Fla. Stat. 117.01). Errors and omissions insurance is not required by law.
+- Notarial act fees are capped at $10 per act (Fla. Stat. 117.05) and $25 per online act (Fla. Stat. 117.275). Travel, printing, and signing-agent fees are not capped.
+- Remote online notarization requires separate registration, a $25,000 RON bond, and at least $25,000 in E&O (Fla. Stat. 117.225). RON registration expires with the underlying commission, with no grace period.
+- In-person electronic notarization (IPEN) is authorised by Fla. Stat. 117.021 and requires no separate registration.
+- Florida deeds require two subscribing witnesses (Fla. Stat. 689.01). Mortgages do not (Fla. Stat. 697.02, 695.26(1)(f)).
+
+## Guides
+${POSTS.posts.map(x => `- [${x.title}](${SITE}/guides/${x.slug}): ${x.excerpt}`).join('\n')}
+
+## Directory
+- [Search the register](${SITE}/#register)
+- [County index](${SITE}/#counties)
+- [Rate card](${SITE}/#rates)
+- [Sitemap](${SITE}/sitemap.xml)
+`;
+    return res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' }).end(body);
+  }
+
   // ---- SEO location pages ----
   let m;
   if ((m = p.match(/^\/notaries\/([a-z0-9-]+)-county\/?$/i))) {
@@ -255,7 +454,8 @@ http.createServer((req, res) => {
     }
   }
   if (p === '/sitemap.xml') {
-    const urls = [`${SITE}/`]
+    const urls = [`${SITE}/`, `${SITE}/guides`]
+      .concat(POSTS.posts.map(x => `${SITE}/guides/${x.slug}`))
       .concat(Object.keys(BY_COUNTY).map(k => `${SITE}/notaries/${k}-county`))
       .concat(CITY_PAGES.map(([k]) => `${SITE}/notaries/${k}-fl`));
     const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -264,14 +464,14 @@ http.createServer((req, res) => {
   }
   if (p === '/robots.txt') {
     return res.writeHead(200, { 'Content-Type': 'text/plain' })
-      .end(`User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${SITE}/sitemap.xml\n`);
+      .end(`User-agent: *\nAllow: /\nDisallow: /api/\n\n# Answer engines: a machine-readable summary is at /llms.txt\nSitemap: ${SITE}/sitemap.xml\n`);
   }
 
   if (p.endsWith('/')) p += 'index.html';
   const file = path.join(ROOT, path.normalize(p));
   if (!file.startsWith(ROOT)) return res.writeHead(403).end('Forbidden');
   // never serve the raw dataset or the ingest script
-  if (/notaries\.json|enhanced\.json|sponsors\.json|ingest\.js|package\.json/i.test(path.basename(file)))
+  if (/notaries\.json|enhanced\.json|sponsors\.json|posts\.json|ingest\.js|package\.json/i.test(path.basename(file)))
     return res.writeHead(404).end('Not found');
 
   fs.readFile(file, (err, data) => {

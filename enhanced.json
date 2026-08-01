@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1766594",
+    "featured": true,
+    "claimed": true,
+    "name": "Matthew Mordecai",
+    "city": "Sanford",
+    "county": "Seminole",
+    "zip": "32773",
+    "commission": "HH 407066",
+    "expires": "2027-06-05",
+    "services": ["Loan Signing","Remote Online Notarization","Real Estate Closing","Power of Attorney","Estate & Trust Documents","General Notary Work","Mobile Notary"],
+    "badges": ["Commission Verified","RON Commissioned","E&O Insured","Licensed FL Real Estate Agent"],
+    "blurb": "Mobile notary and Florida-commissioned remote online notary serving Central Florida. Loan signings, real estate closings, POAs, estate documents, and everyday general notary work. Also a licensed Florida real estate agent.",
+    "covers": "Seminole, Orange, Volusia, Lake",
+    "fee": "From $85",
+    "mobile": true,
+    "ron": true
+  }
+]

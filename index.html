@@ -73,7 +73,7 @@ section{padding:34px 0}
 .form .cap{background:var(--green);color:#E6DCC2;font-size:12px;letter-spacing:.15em;
   text-transform:uppercase;padding:8px 16px;text-align:center}
 .form .in{padding:18px}
-.fields{display:grid;grid-template-columns:1.6fr 1fr 1fr auto;gap:15px;align-items:end}
+.fields{display:grid;grid-template-columns:1.5fr 1fr 1fr .9fr auto;gap:14px;align-items:end}
 @media(max-width:900px){.fields{grid-template-columns:1fr}}
 label{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 input,select{width:100%;padding:9px 11px;border:1px solid var(--rule);border-radius:0;font-size:15.5px;
@@ -106,6 +106,10 @@ tbody tr.feat:hover{background:#EFE3C4}
 tbody tr.feat td:first-child{border-left:4px solid var(--gold-3)}
 .nm{font-weight:700}
 .sub{font-size:12.5px;color:var(--muted);margin-top:2px;font-style:italic}
+.sub.one{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34ch}
+.stand{display:flex;flex-wrap:wrap;gap:2px}
+.act{margin-top:6px}
+tbody td{max-width:0}
 .mono{font-family:var(--mono);font-size:13px;white-space:nowrap}
 .tag{display:inline-block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
   padding:2px 7px;border:1px solid;margin:1px 3px 1px 0;white-space:nowrap}
@@ -130,6 +134,34 @@ tbody tr.feat td:first-child{border-left:4px solid var(--gold-3)}
   cursor:pointer;color:var(--ox);text-align:left;break-inside:avoid}
 .cidx button:hover{color:var(--green);background:var(--green-3)}
 .cidx button span{color:var(--faint);font-family:var(--mono);font-size:12px}
+
+/* ---------- suppliers / sponsors ---------- */
+.newbar{background:var(--gold-2);border:1px solid var(--gold-3);padding:12px 18px;margin:0 0 22px;
+  text-align:center;font-size:14px;color:#4C3D14}
+.newbar b{font-family:var(--mono);font-size:16px}
+.sup{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.slot{border:1px solid var(--rule);background:var(--paper-3);padding:15px 17px;display:flex;
+  flex-direction:column;gap:7px;min-height:150px}
+.slot.open{border-style:dashed;background:var(--paper-2)}
+.slot .cat{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--gold);font-weight:700;
+  padding-bottom:6px;border-bottom:1px solid var(--rule-2)}
+.slot h4{font-size:16px}
+.slot p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.slot .avail{font-style:italic;color:var(--faint);font-size:13.5px;margin:0}
+.slot .rate{margin-top:auto;padding-top:9px;border-top:1px dotted var(--rule);
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.slot .rate b{font-family:var(--mono);font-size:15px;color:var(--green)}
+.slot .rate span{font-size:11.5px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- rate card ---------- */
+.rates{border:1px solid var(--rule);background:var(--paper-3);max-width:880px;margin:0 auto}
+.rates .r{display:flex;justify-content:space-between;gap:20px;padding:13px 18px;border-bottom:1px solid var(--rule-2)}
+.rates .r:last-child{border-bottom:0}
+.rates .r.hl{background:var(--gold-2)}
+.rates h4{font-size:15px;margin-bottom:2px}
+.rates p{margin:0;font-size:13px;color:var(--muted);font-style:italic;max-width:56ch}
+.rates .v{font-family:var(--mono);font-size:14.5px;font-weight:700;white-space:nowrap;color:var(--green);text-align:right}
+.rates .v small{display:block;font-family:var(--serif);font-size:11px;color:var(--faint);font-weight:400;font-style:italic}
 
 /* ---------- notes / articles ---------- */
 .notes{columns:2;column-gap:40px}
@@ -200,6 +232,8 @@ footer a:hover{color:#fff;text-decoration:underline}
   <a href="#register">The Register</a>
   <a href="#counties">County Index</a>
   <a href="#notes">Notes on the Records</a>
+  <a href="#suppliers">Suppliers</a>
+  <a href="#rates">Rate Card</a>
   <a href="#notaries">For Notaries</a>
   <a onclick="openClaim()">Claim a Listing</a>
 </div></nav>
@@ -231,6 +265,10 @@ footer a:hover{color:#fff;text-decoration:underline}
           <option>Remote Online Notarization</option><option>Loan Signing</option>
           <option>Real Estate Closing</option><option>Power of Attorney</option>
           <option>Estate &amp; Trust Documents</option></select></div>
+        <div><label for="sort">Order</label><select id="sort">
+          <option value="">Alphabetical</option>
+          <option value="recent">Newly commissioned</option>
+          <option value="expiring">Expiring soonest</option></select></div>
         <div style="display:flex;gap:8px"><button class="btn" onclick="go(1)">Search</button>
           <button class="btn sec" onclick="reset()">Reset</button></div>
       </div>
@@ -267,6 +305,33 @@ footer a:hover{color:#fff;text-decoration:underline}
     <div class="note"><h4>Corrections &amp; Removal</h4><p>A notary may claim, correct, or request removal of an entry at no charge. Removal from this register does not affect the underlying state record, which remains public.</p></div>
     <div class="note"><h4>No Legal Advice</h4><p>Neither this register nor any notary public in Florida may give legal advice. A notary may not select documents, explain their legal effect, or advise how they should be completed.</p></div>
   </div>
+</div></section>
+
+<section id="suppliers"><div class="wrap">
+  <div class="sechead"><h2>Notary Suppliers &amp; Services</h2>
+    <p>Vendors serving Florida notaries. Placements are paid and are marked as such.</p></div>
+  <div class="newbar" id="newbar"></div>
+  <div class="sup" id="supGrid"></div>
+  <div class="ctr" style="margin-top:22px">
+    <button class="btn" onclick="openSponsor()">Enquire About a Placement</button></div>
+</div></section>
+
+<section class="band" id="rates"><div class="wrap">
+  <div class="sechead"><h2>Rate Card</h2>
+    <p>Listing in the register is free and always will be. These are the optional placements.</p></div>
+  <div class="rates">
+    <div class="r"><div><h4>Entry of Record</h4><p>Name, commission, expiration, city and county — published automatically from state records.</p></div><div class="v">No charge</div></div>
+    <div class="r"><div><h4>Claimed Entry</h4><p>Services, counties covered, contact button, credential marks. Eligible for referred work.</p></div><div class="v">No charge</div></div>
+    <div class="r hl"><div><h4>Featured Entry &mdash; Metropolitan</h4><p>Miami-Dade, Broward, Palm Beach, Orange, Hillsborough. Limited to five per county.</p></div><div class="v">$299&ndash;399<small>per year</small></div></div>
+    <div class="r hl"><div><h4>Featured Entry &mdash; Regional</h4><p>Duval, Pinellas, Lee, Polk, Pasco, Brevard, Osceola, Seminole, Volusia, Sarasota.</p></div><div class="v">$149&ndash;199<small>per year</small></div></div>
+    <div class="r"><div><h4>Featured Entry &mdash; Rural</h4><p>All remaining counties.</p></div><div class="v">$79&ndash;99<small>per year</small></div></div>
+    <div class="r"><div><h4>Additional County</h4><p>Extend a featured entry into a neighbouring county.</p></div><div class="v">$49&ndash;79<small>per county / yr</small></div></div>
+    <div class="r"><div><h4>Verification Mark</h4><p>Annual review of E&amp;O coverage, background screening, and remote online commissioning.</p></div><div class="v">$39&ndash;59<small>per year</small></div></div>
+    <div class="r"><div><h4>Referred Work</h4><p>Charged only upon a completed signing referred through this register. No work, no fee.</p></div><div class="v">15&ndash;25%<small>of the signing fee</small></div></div>
+  </div>
+  <div class="ctr" style="margin-top:20px">
+    <button class="btn" onclick="openWaitlist()">Join the Featured Waiting List</button></div>
+  <p class="hint" style="max-width:70ch;margin:16px auto 0">Featured entries are not yet on sale. We are seating the waiting list while referral volume is established, so that placement is sold against demonstrated work rather than promise.</p>
 </div></section>
 
 <section class="band" id="notaries"><div class="wrap">
@@ -307,7 +372,7 @@ footer a:hover{color:#fff;text-decoration:underline}
       <p style="margin:0;max-width:38ch">A free public register of commissioned notaries public in the State of Florida.</p>
     </div>
     <div><h5>The Register</h5><a href="#register">Search entries</a><a href="#counties">County index</a><a href="#notes">Notes on the records</a></div>
-    <div><h5>Notaries</h5><a onclick="openClaim()">Claim an entry</a><a href="#notaries">Featured entry</a><a onclick="openRemove()">Request removal</a></div>
+    <div><h5>Notaries</h5><a onclick="openClaim()">Claim an entry</a><a href="#rates">Rate card</a><a onclick="openRemove()">Request removal</a></div>
     <div><h5>Official Resources</h5>
       <a href="https://notaries.dos.fl.gov/not001.html" target="_blank" rel="noopener">FL DOS notary search</a>
       <a href="https://dos.fl.gov/sunbiz/other-services/notaries/" target="_blank" rel="noopener">FL DOS notary information</a>
@@ -357,23 +422,29 @@ function row(n){
   if(feat) tags+='<span class="tag feat">Featured</span>';
   tags+= claimed?'<span class="tag claim">Claimed</span>':'<span class="tag rec">Of record</span>';
   if(claimed&&n.ron) tags+='<span class="tag ron">RON</span>';
+  // keep every row the same height: at most three services, remainder summarised
+  var svcLine='';
+  if(svc.length){
+    var head=svc.slice(0,3).map(esc).join(' \u00b7 ');
+    svcLine='<div class="sub one">'+head+(svc.length>3?' &nbsp;+'+(svc.length-3)+' more':'')+'</div>';
+  }
   var action=claimed
-    ? '<div style="margin-top:6px"><button class="btn sm" onclick="openReq(\''+esc(n.name).replace(/'/g,"\\'")+'\')">Contact</button></div>'
-    : '<div style="margin-top:6px"><button class="btn sm sec" onclick="openClaim(\''+esc(n.commission||'')+'\')">Claim</button></div>';
+    ? '<button class="btn sm" onclick="openReq(\''+esc(n.name).replace(/'/g,"\\'")+'\')">Contact</button>'
+    : '<button class="btn sm sec" onclick="openClaim(\''+esc(n.commission||'')+'\')">Claim</button>';
   return '<tr'+(feat?' class="feat"':'')+'>'+
-    '<td><span class="nm">'+esc(n.name)+'</span>'+(n.covers?'<div class="sub">Covers '+esc(n.covers)+'</div>':'')+'</td>'+
+    '<td><span class="nm">'+esc(n.name)+'</span>'+(n.covers?'<div class="sub one">Covers '+esc(n.covers)+'</div>':'')+'</td>'+
     '<td>'+esc(n.city||'\u2014')+'<div class="sub">'+esc(n.county?n.county+' County':'\u2014')+(n.zip?' &middot; '+esc(n.zip):'')+'</div></td>'+
     '<td class="mono">'+esc(n.commission||'\u2014')+'</td>'+
     '<td class="mono">'+fmtDate(n.expires)+'</td>'+
     '<td class="mono">'+esc(n.bondAgency||'\u2014')+'</td>'+
-    '<td>'+tags+(svc.length?'<div class="sub">'+svc.map(esc).join(', ')+'</div>':'')+action+'</td></tr>';
+    '<td><div class="stand">'+tags+'</div>'+svcLine+'<div class="act">'+action+'</div></td></tr>';
 }
 
 async function go(p){
   PAGE=p||1;
   var sk='<tr><td colspan="6"><span class="sk"></span></td></tr>';
   $('rows').innerHTML=new Array(8).fill(sk).join('');
-  var qs=new URLSearchParams({q:$('q').value.trim(),county:$('county').value,service:$('service').value,page:PAGE,per:'25'});
+  var qs=new URLSearchParams({q:$('q').value.trim(),county:$('county').value,service:$('service').value,sort:$('sort').value,page:PAGE,per:'25'});
   try{
     var d=await (await fetch('/api/notaries?'+qs)).json();
     $('count').textContent=num(d.total)+(d.total===1?' entry':' entries')+(d.pages>1?'  \u2014  folio '+num(d.page)+' of '+num(d.pages):'');
@@ -389,7 +460,7 @@ async function go(p){
   }catch(e){ $('rows').innerHTML='<tr><td colspan="6" class="empty">The register is temporarily unavailable. Please reload the page.</td></tr>'; }
 }
 function pickCounty(c){ $('county').value=c; $('q').value=''; go(1); document.getElementById('register').scrollIntoView(); }
-function reset(){ $('q').value=''; $('county').value=''; $('service').value=''; go(1); }
+function reset(){ $('q').value=''; $('county').value=''; $('service').value=''; $('sort').value=''; go(1); }
 
 var mode='request';
 function openX(t,w,note,msgLabel,showComm){
@@ -409,15 +480,35 @@ function submitForm(){
   console.log('SUBMIT \u2192',{mode:mode,name:n,email:e,phone:$('fPhone').value,commission:$('fComm').value,details:$('fMsg').value});
   document.querySelector('.sheet').innerHTML=
     '<div class="hd"><h3>Received</h3><p>An acknowledgement will follow by email.</p></div>'+
-    '<div class="bd"><p style="margin:0 0 12px">Thank you, '+esc(n.split(' ')[0])+'. Your '+(mode==='claim'?'claim':mode==='remove'?'request for removal':'enquiry')+' has been entered.</p>'+
+    '<div class="bd"><p style="margin:0 0 12px">Thank you, '+esc(n.split(' ')[0])+'. Your '+(mode==='claim'?'claim':mode==='remove'?'request for removal':mode==='sponsor'?'placement enquiry':mode==='waitlist'?'application':'enquiry')+' has been entered.</p>'+
     '<div class="callout">Demonstration confirmation. Connect a backend to deliver this in earnest.</div></div>'+
     '<div class="mfoot"><button class="btn" onclick="location.reload()">Close</button></div>';
 }
 
 var t;
 $('q').addEventListener('input',function(){clearTimeout(t);t=setTimeout(function(){go(1);},320);});
-['county','service'].forEach(function(id){$(id).addEventListener('change',function(){go(1);});});
-loadMeta(); go(1);
+['county','service','sort'].forEach(function(id){$(id).addEventListener('change',function(){go(1);});});
+async function loadSponsors(){
+  try{
+    var st=await (await fetch('/api/stats')).json();
+    $('newbar').innerHTML='<b>'+num(st.newly)+'</b> notaries newly commissioned in Florida in the last 30 days'+
+      (st.expiring? ' &nbsp;&middot;&nbsp; <b>'+num(st.expiring)+'</b> commissions expiring within 90 days':'')+
+      '<div style="font-size:12.5px;font-style:italic;margin-top:4px">Every one of them needs a bond, a seal, E&amp;O coverage, and training.</div>';
+    var d=await (await fetch('/api/sponsors')).json();
+    $('supGrid').innerHTML=(d.slots||[]).map(function(x){
+      if(x.live) return '<div class="slot"><div class="cat">'+esc(x.category)+'</div>'+
+        '<h4>'+esc(x.name)+'</h4><p>'+esc(x.blurb)+'</p>'+
+        (x.offer?'<p style="color:var(--ox)"><b>'+esc(x.offer)+'</b></p>':'')+
+        '<div class="rate"><a href="'+esc(x.url)+'" target="_blank" rel="noopener sponsored">Visit &rsaquo;</a><span>Paid placement</span></div></div>';
+      return '<div class="slot open"><div class="cat">'+esc(x.category)+'</div>'+
+        '<h4>Placement available</h4><p class="avail">This category is open. One vendor only.</p>'+
+        '<div class="rate"><b>'+esc(x.rate)+'</b><span>'+esc(x.reach)+'</span></div></div>';
+    }).join('');
+  }catch(e){console.error(e);}
+}
+function openSponsor(){mode='sponsor';openX('Placement Enquiry','Category placements are exclusive \u2014 one vendor per category.','We will reply with current availability, reach figures, and terms.','Company and category of interest',false);}
+function openWaitlist(){mode='waitlist';openX('Featured Waiting List','No charge to join, and no obligation. You will be contacted before placement opens in your county.','Featured entries are not yet on sale; the list is seated in order of application.','County or counties of interest',true);}
+loadMeta(); loadSponsors(); go(1);
 </script>
 </body>
 </html>

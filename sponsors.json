@@ -1,0 +1,23 @@
+{
+  "note": "Paid placements. Each slot renders in the Suppliers section and rotates through the register banner. Set live:true and fill fields when a sponsor signs.",
+  "slots": [
+    { "id": "bond-eo", "category": "Bonds & E&O Insurance", "live": false,
+      "name": "", "blurb": "", "url": "", "offer": "",
+      "rate": "$499/mo", "reach": "Category exclusive" },
+    { "id": "supplies", "category": "Seals, Stamps & Journals", "live": false,
+      "name": "", "blurb": "", "url": "", "offer": "",
+      "rate": "$399/mo", "reach": "Category exclusive" },
+    { "id": "training", "category": "Training & Certification", "live": false,
+      "name": "", "blurb": "", "url": "", "offer": "",
+      "rate": "$399/mo", "reach": "Category exclusive" },
+    { "id": "ron", "category": "RON Platforms", "live": false,
+      "name": "", "blurb": "", "url": "", "offer": "",
+      "rate": "$349/mo", "reach": "Category exclusive" },
+    { "id": "signing", "category": "Signing Services Hiring Notaries", "live": false,
+      "name": "", "blurb": "", "url": "", "offer": "",
+      "rate": "$299/mo", "reach": "Per metro" },
+    { "id": "background", "category": "Background Screening", "live": false,
+      "name": "", "blurb": "", "url": "", "offer": "",
+      "rate": "$299/mo", "reach": "Category exclusive" }
+  ]
+}
